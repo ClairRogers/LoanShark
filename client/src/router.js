@@ -13,6 +13,10 @@ export default new Router({
       component: Home
     },
     {
+      path: '*',
+      redirect: '/'
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

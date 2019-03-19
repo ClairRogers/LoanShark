@@ -3,7 +3,7 @@ var connectionString = "mongodb://loanshark1:Loaning4Sharks!@den1.mongo1.gear.ho
 var connection = mongoose.connection
 
 
-mongoose.connect(connectionString, { useMongoClient: true })
+mongoose.connect(connectionString, { useNewUrlParser: true })
 
 connection.on('error', err => {
   console.log('ERROR FROM DATABASE: ', err)

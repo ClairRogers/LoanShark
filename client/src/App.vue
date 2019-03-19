@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="container-fluid">
     <router-view />
-    <button>hello</button>
   </div>
 </template>
 

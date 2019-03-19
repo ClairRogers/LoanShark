@@ -32,14 +32,15 @@ export default new Vuex.Store({
       auth.post('register', newUser)
         .then(res => {
           commit('setUser', res.data)
-          console.log('loggedin')
+          router.push({ name: 'home' })
         })
     },
     authenticate({ commit, dispatch }) {
+
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          console.log('loggedin')
+          router.push({ name: 'home' })
         })
         .catch(res => {
           console.log('error')
@@ -49,13 +50,13 @@ export default new Vuex.Store({
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
-          console.log('loggedin')
+          router.push({ name: 'home' })
         })
     },
     logOut({ commit, dispatch }) {
       auth.delete('logout')
         .then(res => {
-          console.log('error')
+          router.push({ name: 'login' })
         })
     },
   }

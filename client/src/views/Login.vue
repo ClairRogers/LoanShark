@@ -12,14 +12,14 @@
           <input type="email" v-model="creds.email" placeholder="email" class="mr-4 login-form">
           <input type="password" v-model="creds.password" placeholder="password" class="login-form">
           <br>
-          <button type="submit" class="btn btn-outline-light mt-3 text-center">Login</button>
+          <button type="submit" class="btn btn-outline-success mt-3 text-center">Login</button>
         </form>
         <form v-else @submit.prevent="register" class="mt-2 text-center">
           <input type="text" v-model="newUser.name" placeholder="name" class="login-form mr-4">
           <input type="email" v-model="newUser.email" placeholder="email" class="login-form">
           <input type="password" v-model="newUser.password" placeholder="password" class="login-form ml-4">
           <br>
-          <button type="submit" class="btn btn-outline-light mt-3 text-center">Create Account</button>
+          <button type="submit" class="btn btn-outline-success mt-3 text-center">Create Account</button>
         </form>
       </div>
     </div>
@@ -29,6 +29,8 @@
         action mt-3" @click="loginForm = !loginForm">
         <p v-if="loginForm">No account? Click here to Register</p>
         <p v-else>Already have an account? Click here to Login</p>
+        <button @click="logout">log out</button>
+
       </div>
     </div>
   </div>
@@ -59,6 +61,9 @@
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
+      },
+      logout() {
+        this.$store.dispatch('logOut')
       }
     }
   };

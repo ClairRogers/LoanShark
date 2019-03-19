@@ -6,12 +6,21 @@ let ObjectId = Schema.Types.ObjectId
 let bcrypt = require('bcryptjs')
 const SALT = 10
 
+let friend = new Schema({
+  name: { type: String, required: true },
+  userId: { type: ObjectId, ref: 'User', required: true },
+  image: { type: String }
+})
 
 let schema = new Schema({
   name: { type: String, required: true },
   //every email must be unique on the database
   email: { type: String, required: true, unique: true },
-  hash: { type: String, required: true }
+  hash: { type: String, required: true },
+  image: { type: String }, //possibly look into base64 image encoding
+  bio: { type: String },
+  paypal: { type: String },
+  friends: [friend]
 }, { timestamps: true })
 
 
