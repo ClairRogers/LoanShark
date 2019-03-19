@@ -1,8 +1,25 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
     <router-view />
+    <button>hello</button>
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'App',
+    mounted() {
+      //Authenticate on startup
+      this.$store.dispatch('authenticate')
+    },
+    methods: {
+      logOut() {
+        this.$store.dispatch('logOut')
+      }
+    }
+  }
+</script>
+
 
 <style>
   #app {

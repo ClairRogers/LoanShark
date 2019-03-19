@@ -1,8 +1,7 @@
-let express = require("express")
-let bp = require("body-parser")
+let express = require('express')
+let bp = require('body-parser')
 var server = express()
 var cors = require('cors')
-
 var port = process.env.PORT || 3000
 server.use(express.static(__dirname + '/../client/dist'))
 
@@ -25,6 +24,21 @@ server.use(bp.json())
 server.use(bp.urlencoded({
   extended: true
 }))
+
+//REGISTER YOUR AUTH ROUTES BEFORE YOUR GATEKEEPER, OTHERWISE YOU WILL NEVER GET LOGGED IN
+let auth = require('./server-assets/auth/routes')
+server.use(auth.session)
+server.use(auth.router)
+
+//Gate Keeper Must login to access any route below this code
+server.use((req, res, next) => {
+  if (!req.session.uid) {
+    return res.status(401).send({
+      error: 'please login to continue'
+    })
+  }
+  next()
+})
 
 //ROUTES
 
