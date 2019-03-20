@@ -23,10 +23,14 @@ router.get('/search/:input', (req, res, next) => {
     ]
   })
     .then(data => {
-      res.send(data)
+      let users = data.map(d => {
+        d.hash = ''
+        return d
+      })
+      res.send(users)
     })
     .catch(err => {
-      console.log('fuck')
+      console.log(err)
       next()
     })
 })

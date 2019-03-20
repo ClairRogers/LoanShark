@@ -22,18 +22,17 @@
             <a class="nav-link" @click="logOut">Logout</a>
           </li>
         </ul>
-        <i class="fas fa-search" data-toggle="modal" data-target="#exampleModal"></i>
+        <i class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"></i>
       </div>
     </nav>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <form class="form-inline my-2 my-lg-0">
-              <input v-model="searchTerm" @input="userSearch" class="form-control mr-sm-2" type="search" placeholder="Find Users"
-                aria-label="Search">
+              <input autofocus="autofocus" ref="search" v-model="searchTerm" @input="userSearch" class="form-control mr-sm-2"
+                type="search" placeholder="Find Users" aria-label="Search">
             </form>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -79,6 +78,11 @@
           this.$store.dispatch('searchUser', this.searchTerm)
         }, 500);
         search()
+      },
+      modalAutoFocus() {
+        $('#searchModal').on('shown.bs.modal', function () {
+          $(this).find('input:first').focus();
+        });
       }
     },
     components: {

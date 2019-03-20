@@ -79,6 +79,9 @@ export default new Vuex.Store({
       if (payload) {
         api.get('users/search/' + payload)
           .then(res => {
+            res.data.forEach(d => {
+              delete d.hash
+            })
             commit('setSearchResults', res.data)
           })
       } else {

@@ -1,5 +1,5 @@
 <template>
-  <div class="login login-forms">
+  <div class="login container-fluid login-forms">
     <div class="row">
       <div class="col-12">
         <h1>LoanShark</h1>
@@ -29,7 +29,6 @@
         action mt-3" @click="loginForm = !loginForm">
         <p v-if="loginForm">No account? Click here to Register</p>
         <p v-else>Already have an account? Click here to Login</p>
-        <button @click="logout">log out</button>
 
       </div>
     </div>
