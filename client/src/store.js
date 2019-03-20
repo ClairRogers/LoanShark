@@ -93,9 +93,10 @@ export default new Vuex.Store({
       }
     },
     addFriend({ commit, dispatch }, payload) {
+
       api.put('users/' + payload._id, payload)
         .then(res => {
-          commit('setUser', res)
+          commit('setUser', res.data)
         })
 
     },
@@ -103,6 +104,20 @@ export default new Vuex.Store({
       commit('setActiveProfile', payload)
       router.push({ name: 'profile', params: { profileId: payload._id } })
     },
+    deleteUser({ commit, dispatch }, payload) {
+      api.delete('users/' + payload)
+        .then(res => {
+          console.log('successssssssssss')
+
+        })
+
+    },
+    editProfile({ commit, dispatch }, payload) {
+      api.put('users/' + payload._id, payload)
+        .then(res => {
+          commit('setUser', res.data)
+        })
+    }
   }
 
 })

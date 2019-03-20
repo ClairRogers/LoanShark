@@ -10,7 +10,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" @click="goHome">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">My Contacts</a>
@@ -26,13 +26,14 @@
       </div>
     </nav>
     <!-- Modal -->
-    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div @click="searchTerm = '' " class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <form class="form-inline my-2 my-lg-0">
-              <input autofocus="autofocus" ref="search" v-model="searchTerm" @input="userSearch" class="form-control mr-sm-2"
-                type="search" placeholder="Find Users" aria-label="Search">
+              <input ref="search" v-model="searchTerm" @input="userSearch" class="form-control mr-sm-2" type="search"
+                placeholder="Find Users" aria-label="Search">
             </form>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -57,6 +58,7 @@
 <script>
   const { debounce } = require('mini-debounce')
   import search from "@/components/Search-comp.vue";
+  import router from './router'
   export default {
     name: 'App',
     mounted() {
@@ -69,24 +71,33 @@
       }
     },
     methods: {
+      results() {
+        return this.$store.state.searchResults
+      },
       logOut() {
         this.$store.dispatch('logOut')
       },
       //Searches as letters are input
       userSearch() {
+
         let search = debounce(query => {
           this.$store.dispatch('searchUser', this.searchTerm)
-        }, 500);
+        }, 300);
         search()
       },
       modalAutoFocus() {
         $('#searchModal').on('shown.bs.modal', function () {
           $(this).find('input:first').focus();
         });
+        this.userSearch('')
+      },
+      goHome() {
+        router.push({ name: 'home' })
       }
     },
     components: {
-      search
+      search,
+      router
     }
   }
 </script>

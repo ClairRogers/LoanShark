@@ -14,9 +14,11 @@ router.get('/', (req, res, next) => {
     })
 })
 
+
+
 let cache = [] // this is where we store the users
 let lastCache = Date.now()
-let cacheLife = 60000000 // you might want to adjust this
+let cacheLife = 500000 // you might want to adjust this
 let nextCache = lastCache + cacheLife
 
 function getCachedUser() {
@@ -166,11 +168,11 @@ router.delete('/:id', (req, res, next) => {
   //find user
   Users.findByIdAndRemove({ _id: req.params.id })
     .then(user => {
-      //if user id is not the person who is logged in then send error
+      // if user id is not the person who is logged in then send error
       if (!user._id.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")
       }
-      //otherwise delete user from server
+      // otherwise delete user from server
       user.remove(err => {
         if (err) {
           console.log(err)

@@ -6,8 +6,8 @@
           class="round ml-3 img-fluid">
       </div>
       <div class="col-6 col-md-3 pr-4">
-        <h5 class="text-right faded"><i title="edit" class="far fa-edit"></i></h5>
-        <h2 class="mt-4">{{user.name}} <i title="PayPal verified" class="fab fa-paypal fa-xs ml-1 faded"></i></h2>
+        <h5 class="text-right faded"><i data-toggle="modal" data-target="#editModal" title="edit" class="far fa-edit"></i></h5>
+        <h2 class="mt-4">{{user.name}} <span v-if="user.paypal"><i title="PayPal verified" class="fab fa-paypal fa-xs ml-1 faded"></i></span></h2>
         <h4>User Rating:</h4>
         <div class="progress">
           <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
@@ -25,6 +25,11 @@
         <borrows></borrows>
       </div>
     </div>
+    <editmodal></editmodal>
+    <form @submit.prevent="die">
+      <input type="text" v-model="userId">
+      <button type="submit">delete everyone jamie</button>
+    </form>
   </div>
 </template>
 
@@ -32,11 +37,16 @@
   // @ is an alias to /src
   import Lends from '@/components/Lends.vue'
   import Borrows from '@/components/Borrows.vue'
+  import Editmodal from '@/components/Edit-modal.vue'
+
 
   export default {
     name: 'home',
     created() {
-      //blocks users not logged in
+
+      this.$store.state.user
+
+      //blocks users not logged in      
       if (!this.$store.state.user._id) {
         this.$router.push({ name: "login" });
       } else {
@@ -46,15 +56,20 @@
     data() {
       return {
         // barWidth: this.user.score + '%'
+        userId: ''
       }
     },
     components: {
       Lends,
-      Borrows
+      Borrows,
+      Editmodal
     },
     methods: {
       logout() {
         this.$store.dispatch('logOut')
+      },
+      die() {
+        this.$store.dispatch('deleteUser', this.userId)
       }
     },
     computed: {
