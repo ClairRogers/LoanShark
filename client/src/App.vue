@@ -40,6 +40,9 @@
             </button>
           </div>
           <div class="modal-body">
+            <div v-if="!searchTerm">
+              <h3 class="my-5">Search for a User</h3>
+            </div>
             <search></search>
           </div>
           <div class="modal-footer">
