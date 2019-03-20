@@ -2,7 +2,7 @@ let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
-//bcrypt uses hashing and salt to obfiscate your password 
+//bcrypt uses hashing and salt to obfiscate your password
 let bcrypt = require('bcryptjs')
 const SALT = 10
 
@@ -10,6 +10,10 @@ let friend = new Schema({
   name: { type: String, required: true },
   userId: { type: ObjectId, ref: 'User', required: true },
   image: { type: String }
+})
+let score = new Schema({
+  provider: { type: ObjectId, ref: 'User', required: true },
+  rating: { type: Number }
 })
 
 let schema = new Schema({
@@ -21,7 +25,7 @@ let schema = new Schema({
   bio: { type: String },
   paypal: { type: String },
   friends: [friend],
-  score: { type: Number, default: 0 }
+  score: [score]
 }, { timestamps: true })
 
 

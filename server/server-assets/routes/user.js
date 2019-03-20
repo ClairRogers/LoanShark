@@ -14,25 +14,54 @@ router.get('/', (req, res, next) => {
     })
 })
 
-router.get('/search/:input', (req, res, next) => {
-  let eval = req.params.input
-  Users.find({
-    $or: [
-      { email: { "$regex": eval, "$options": "i" } },
-      { name: { "$regex": eval, "$options": "i" } }
-    ]
+let cache = [] // this is where we store the users
+let lastCache = Date.now()
+let cacheLife = 60000000 // you might want to adjust this
+let nextCache = lastCache + cacheLife
+
+function getCachedUser() {
+  return new Promise((resolve, reject) => {
+    if (Date.now() < nextCache && cache.length > 0) {
+      // find all the users again
+      return resolve(cache)
+    }
+    Users.find().then(users => {
+      cache = users
+      lastCache = Date.now()
+      nextCache = lastCache + cacheLife
+      resolve(cache)
+    })
   })
-    .then(data => {
-      let users = data.map(d => {
-        d.hash = ''
-        return d
-      })
-      res.send(users)
-    })
-    .catch(err => {
-      console.log(err)
-      next()
-    })
+}
+
+
+router.get('/search/:input', (req, res, next) => {
+  let query = req.params.input
+
+  getCachedUser().then(users => {
+    let data = cache.filter(u => u.name.includes(query) || u.email.includes(query))
+    res.send(data)
+  })
+
+
+
+  // Users.find({
+  //   $or: [
+  //     { email: { "$regex": eval, "$options": "i" } },
+  //     { name: { "$regex": eval, "$options": "i" } }
+  //   ]
+  // })
+  //   .then(data => {
+  //     let users = data.map(d => {
+  //       d.hash = ''
+  //       return d
+  //     })
+  //     res.send(users)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //     next()
+  //   })
 })
 
 
@@ -67,40 +96,48 @@ router.get('/:id', (req, res, next) => {
 //PUT takes in user._id as a parameter, finds user's info, checks that it's the same as the session ID; if yes, update object, if no then access denied. When we do user ratings at the end of loan agreements, the onclick 
 router.put('/:id', (req, res, next) => {
 
-  if (req.params.id == req.session.uid) {
-    Users.findById(req.params.id)
+  if (req.params.id.toString() == req.session.uid.toString()) {
+    Users.findOneAndUpdate({ _id: req.session.uid }, req.body, { new: true })
       .then(user => {
-        user.update(req.body, (err) => {
-          if (err) {
-            console.log(err)
-            next()
-            return
-          }
-          res.send(user)
-        })
-      })
-      .catch(err => {
-        console.log(err)
-        next()
-      })
-  } else if (req.params.id != req.session.uid) {
-    Users.findById(req.params.id)
-      .then(user => {
-        user.score.push(req.body.score, (err) => {
-          if (err) {
-            console.log(err)
-            next()
-            return
-          }
-          res.send(user)
-        })
+        res.send(user)
       })
       .catch(err => {
         console.log(err)
         next()
       })
   }
+  else {
+    Users.findById(req.params.id)
+      .then(user => {
+        let found = user.score.find(s => s.provider == req.session.uid)
+        if (found) {
+          user.score[user.score.indexOf(found)].rating = req.body.score
+          user.markModified('score')
+        }
+        else {
+          let newRating = {
+            provider: req.session.uid,
+            rating: req.body.score
+          }
+          user.score.push(newRating)
+        }
+        user.save(err => {
+          if (err) {
+            console.log(err)
+            next()
+            return
+          }
+          user.hash = ''
+          res.send(user)
+        })
+          //make sure you remove hash on front end
 
+          .catch(err => {
+            console.log(err)
+            next()
+          })
+      })
+  }
 })
 // Users.findById(req.params.id)
 //   .then(user => {

@@ -23,7 +23,8 @@ export default new Vuex.Store({
     user: {},
     searchResults: [],
     lends: [],
-    borrows: []
+    borrows: [],
+    activeProfile: {}
   },
   mutations: {
     setUser(state, user) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     setBorrows(state, data) {
       state.borrows = data
     },
+    setActiveProfile(state, data) {
+      state.activeProfile = data
+    }
   },
   actions: {
     //#region AUTH
@@ -87,6 +91,18 @@ export default new Vuex.Store({
       } else {
         commit('setSearchResults', '')
       }
-    }
+    },
+    addFriend({ commit, dispatch }, payload) {
+      api.put('users/' + payload._id, payload)
+        .then(res => {
+          commit('setUser', res)
+        })
+
+    },
+    setActiveProfile({ commit, dispatch }, payload) {
+      commit('setActiveProfile', payload)
+      router.push({ name: 'profile', params: { profileId: payload._id } })
+    },
   }
+
 })

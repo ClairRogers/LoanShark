@@ -8,14 +8,6 @@ let term = new Schema({
   description: { type: String, required: true }
 }, { timestamps: true })
 
-// let lender = new Schema({
-//   authorId: { type: ObjectId, ref: 'User', required: true }
-// })
-
-// let borrower = new Schema({
-//   authorId: { type: ObjectId, ref: 'User', required: true }
-// })
-
 let schema = new Schema({
   item: { type: String, required: true },
   title: { type: String, required: true },
