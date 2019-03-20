@@ -18,8 +18,8 @@ router.get('/search/:input', (req, res, next) => {
   let eval = req.params.input
   Users.find({
     $or: [
-      { email: eval },
-      { name: eval }
+      { email: { "$regex": eval, "$options": "i" } },
+      { name: { "$regex": eval, "$options": "i" } }
     ]
   })
     .then(data => {
