@@ -75,11 +75,15 @@ export default new Vuex.Store({
     //#endregion
 
     searchUser({ commit, dispatch }, payload) {
-      api.get('users/search/' + payload)
-        .then(res => {
-          commit('setSearchResults', res.data)
-          console.log(res.data)
-        })
+      //if statement prevents errors when deleting input
+      if (payload) {
+        api.get('users/search/' + payload)
+          .then(res => {
+            commit('setSearchResults', res.data)
+          })
+      } else {
+        commit('setSearchResults', '')
+      }
     }
   }
 })

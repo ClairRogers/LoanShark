@@ -74,7 +74,7 @@
       userSearch() {
         let search = debounce(query => {
           this.$store.dispatch('searchUser', this.searchTerm)
-        }, 1000);
+        }, 500);
         search()
       }
     },
