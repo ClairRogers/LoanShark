@@ -20,14 +20,27 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    searchResults: [],
+    lends: [],
+    borrows: []
   },
   mutations: {
     setUser(state, user) {
       state.user = user
     },
+    setSearchResults(state, data) {
+      state.searchResults = data
+    },
+    setLends(state, data) {
+      state.lends = data
+    },
+    setBorrows(state, data) {
+      state.borrows = data
+    },
   },
   actions: {
+    //#region AUTH
     register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
@@ -59,5 +72,15 @@ export default new Vuex.Store({
           router.push({ name: 'login' })
         })
     },
+    //#endregion
+
+    searchUser({ commit, dispatch }, payload) {
+      // debugger
+      api.get('users/search/' + payload)
+        .then(res => {
+          commit('setSearchResults', res.data)
+          console.log(res.data)
+        })
+    }
   }
 })

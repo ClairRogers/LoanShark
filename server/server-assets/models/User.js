@@ -20,7 +20,8 @@ let schema = new Schema({
   image: { type: String }, //possibly look into base64 image encoding
   bio: { type: String },
   paypal: { type: String },
-  friends: [friend]
+  friends: [friend],
+  score: { type: Number, default: 0 }
 }, { timestamps: true })
 
 
