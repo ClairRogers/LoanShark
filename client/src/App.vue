@@ -53,6 +53,7 @@
 </template>
 
 <script>
+  const { debounce } = require('mini-debounce')
   import search from "@/components/Search-comp.vue";
   export default {
     name: 'App',
@@ -71,8 +72,10 @@
       },
       //Searches as letters are input
       userSearch() {
-        // debugger
-        this.$store.dispatch('searchUser', this.searchTerm)
+        let search = debounce(query => {
+          this.$store.dispatch('searchUser', this.searchTerm)
+        }, 1000);
+        search()
       }
     },
     components: {

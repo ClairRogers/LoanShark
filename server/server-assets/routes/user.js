@@ -15,24 +15,18 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/search/:input', (req, res, next) => {
-
-  for (var i = 0; i < Users.length; i++) {
-    if (Users[i].Name == req.params.input) {
-      console.log('found')
-    }
-  }
-
+  let eval = req.params.input
   Users.find({
     $or: [
-      { email: /req.params.input/gi },
-      { name: /req.params.input/gi }
+      { email: eval },
+      { name: eval }
     ]
   })
     .then(data => {
       res.send(data)
     })
     .catch(err => {
-      console.log(err)
+      console.log('fuck')
       next()
     })
 })

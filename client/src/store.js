@@ -75,7 +75,6 @@ export default new Vuex.Store({
     //#endregion
 
     searchUser({ commit, dispatch }, payload) {
-      // debugger
       api.get('users/search/' + payload)
         .then(res => {
           commit('setSearchResults', res.data)
