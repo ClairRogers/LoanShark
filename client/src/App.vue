@@ -132,4 +132,10 @@
   i {
     cursor: pointer;
   }
+
+  body {
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
+    background-attachment: fixed;
+  }
 </style>

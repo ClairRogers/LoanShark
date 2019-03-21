@@ -1,6 +1,6 @@
 <template>
   <div class="messages">
-    <div v-for="message in messages">{{message.title}}</div>
+    <div v-for="message in messages">{{message.title}} {{message.item}} {{message.description}}</div>
   </div>
 </template>
 

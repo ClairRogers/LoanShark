@@ -18,6 +18,7 @@ router.post('/', (req, res, next) => {
 //EDIT an in-progress agreement
 router.put('/:id', (req, res, next) => {
   if (req.body.lender.toString() == req.session.uid.toString() || req.body.borrower.toString() == req.session.uid.toString()) {
+    delete req.body.createdAt
     Ags.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
       .then(ag => {
         res.send(ag)

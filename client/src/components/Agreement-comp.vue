@@ -11,36 +11,38 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
+
           <div class="modal-body">
             <form @submit.prevent="initiateAgreement">
-              <div class="input-group" :class="[newAgreement.initiated ? 'disabled' : '' ]">
+              <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="">Title and Item</span>
                 </div>
-                <input type="text" v-model="newAgreement.title" required class="form-control">
-                <input type="text" v-model="newAgreement.item" required class="form-control">
+                <input type="text" v-model="newAgreement.title" required class="form-control" :disabled="activeAg.initiated">
+                <input type="text" v-model="newAgreement.item" required class="form-control" :disabled="activeAg.initiated">
               </div>
               <div class="input-group input-group-lg my-5">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-lg">Description</span>
                 </div>
                 <input v-model="newAgreement.description" required type="text" class="form-control" aria-label="Large"
-                  aria-describedby="inputGroup-sizing-sm">
+                  aria-describedby="inputGroup-sizing-sm" :disabled="activeAg.initiated">
               </div>
-              <button type="submit" class="btn btn-info">Start Agreement</button>
+              <button type="submit" class="btn btn-info" v-if="!activeAg.initiated">Start
+                Agreement</button>
             </form>
+
+            <ol class="text-left">
+              <li v-for="term in this.newAgreement.terms">{{term}}</li>
+            </ol>
+
             <form v-if="showDetails">
               <div v-if="showDetails" class="input-group my-5">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                  </div>
-                </div>
-                <input type="text" class="form-control" aria-label="Text input with checkbox">
+                <input v-model="term" type="text" class="form-control" aria-label="Text input with checkbox">
                 <br>
-                <button class="btn btn-info">Commit Term</button>
+                <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
-              <button class="btn btn-info" @click="showTaskForm = !showTaskForm">Add Term</button>
               <hr>
               <div class="dropdown">
                 <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -54,8 +56,11 @@
                 </div>
               </div>
               <hr>
-              <button type="submit" class="btn btn-info">Make Agreement</button>
+              <button @click="editAgreement" class="btn btn-info">Make Agreement</button>
             </form>
+
+
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -86,9 +91,14 @@
           initiated: true
         },
         showDetails: false,
+        term: '',
+        editTerm: false
       }
     },
     computed: {
+      activeAg() {
+        return this.$store.state.activeAg
+      }
     },
     methods: {
       initiateAgreement() {
@@ -96,7 +106,12 @@
         this.showDetails = !this.showDetails
       },
       editAgreement() {
-        this.$store.dispatch('editAgreement')
+        this.newAgreement._id = this.$store.state.activeAg._id
+        this.$store.dispatch('editAgreement', this.newAgreement)
+      },
+      addTerm() {
+        this.newAgreement.terms.push(this.term)
+        this.term = ''
       }
     },
     components: {}
