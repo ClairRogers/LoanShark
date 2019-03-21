@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
 
 let cache = [] // this is where we store the users
 let lastCache = Date.now()
-let cacheLife = 500000 // you might want to adjust this
+let cacheLife = 10000 // you might want to adjust this
 let nextCache = lastCache + cacheLife
 
 function getCachedUser() {
@@ -38,10 +38,10 @@ function getCachedUser() {
 
 
 router.get('/search/:input', (req, res, next) => {
-  let query = req.params.input
+  let query = req.params.input.toLowerCase()
 
   getCachedUser().then(users => {
-    let data = cache.filter(u => u.name.includes(query) || u.email.includes(query))
+    let data = cache.filter(u => u.name.toLowerCase().includes(query) || u.email.toLowerCase().includes(query))
     res.send(data)
   })
 

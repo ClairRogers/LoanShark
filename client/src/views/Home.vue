@@ -2,8 +2,7 @@
   <div class="home container-fluid">
     <div class="row mt-4">
       <div class="col-6 col-md-3 offset-md-3">
-        <img src="https://www.r-users.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="User image"
-          class="round ml-3 img-fluid">
+        <img :src="user.image" alt="User image" class="round ml-3 img-fluid">
       </div>
       <div class="col-6 col-md-3 pr-4">
         <h5 class="text-right faded"><i data-toggle="modal" data-target="#editModal" title="edit" class="far fa-edit"></i></h5>
@@ -17,7 +16,7 @@
     </div>
     <div class="row mx-0">
       <div class="col-12 col-md-6 offset-md-3">
-        <p class="mt-3 mx-3 text-justify">{{user.description}}</p>
+        <p class="mt-3 mx-3 text-justify">{{user.bio}}</p>
         <hr>
         <h4 class="text-left ml-3">My Lends:</h4>
         <lends></lends>
@@ -82,7 +81,7 @@
 
 <style>
   .round {
-    height: auto;
+    height: 180px;
     width: 180px;
     border-radius: 50%;
     border: solid 1px #c5c5c5;

@@ -14,16 +14,16 @@
               Name:
               <input v-model="editedUser.name" class="form-control mb-3" type="text" placeholder="">
               Description:
-              <input v-model="editedUser.description" class="form-control mb-3" type="text" placeholder="">
+              <input v-model="editedUser.bio" class="form-control mb-3" type="text" placeholder="">
               Email:
               <input v-model="editedUser.email" class="form-control mb-3" type="text" placeholder="">
               Profile Image (URL):
               <input v-model="editedUser.image" class="form-control" type="text" placeholder="">
+              <button type="submit" class="btn btn-info mt-3 text-right">Save changes</button>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-info">Save changes</button>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
         });
       },
       editProfile(user) {
-        debugger
+
         this.editedUser._id = user._id
         this.$store.dispatch('editProfile', this.editedUser)
       }

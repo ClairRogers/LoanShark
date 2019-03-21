@@ -2,8 +2,7 @@
   <div class="Profile container-fluid">
     <div class="row mt-4">
       <div class="col-6 col-md-3 offset-md-3">
-        <img src="https://www.r-users.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="User image"
-          class="round ml-3 img-fluid">
+        <img :src="activeProfile.image" alt="User image" class="round ml-3 img-fluid">
       </div>
       <div class="col-6 col-md-3 pr-4">
         <!-- <h5 class="text-right faded"><i title="edit" class="far fa-edit"></i></h5> -->
@@ -17,7 +16,7 @@
     </div>
     <div class="row mx-0">
       <div class="col-12 col-md-6 offset-md-3">
-        <p class="mt-3 mx-3 text-justify">{{activeProfile.description}}</p>
+        <p class="mt-3 mx-3 text-justify">{{activeProfile.bio}}</p>
         <button class="btn btn-sm btn-info" @click="addFriend(activeProfile, user)">Add Contact</button>
         <hr>
       </div>
