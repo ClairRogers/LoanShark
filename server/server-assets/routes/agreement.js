@@ -5,7 +5,6 @@ let Ags = require('../models/Agreement.js')
 
 //CREATE a new agreement
 router.post('/', (req, res, next) => {
-  debugger
   if (req.body.authorId.toString() == req.session.uid.toString()) {
     Ags.create(req.body)
       .then(ag => res.send(ag))
