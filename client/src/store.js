@@ -74,6 +74,8 @@ export default new Vuex.Store({
       auth.delete('logout')
         .then(res => {
           router.push({ name: 'login' })
+          let data = {}
+          commit('setUser', data)
         })
     },
     //#endregion
@@ -93,7 +95,6 @@ export default new Vuex.Store({
       }
     },
     addFriend({ commit, dispatch }, payload) {
-
       api.put('users/' + payload._id, payload)
         .then(res => {
           commit('setUser', res.data)
@@ -117,7 +118,24 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
         })
+    },
+
+
+
+    //#region AGREEMENTS
+    initiateAgreement({ commit, dispatch }, payload) {
+
+      api.post('agreements/', payload)
+        .then(res => {
+          console.log('agreement initiated')
+        })
     }
+    //#endregion
+
   }
+
+
+
+
 
 })

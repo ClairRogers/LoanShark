@@ -32,7 +32,7 @@ router.post('/auth/login', (req, res) => {
   //FIND A USER BASED ON PROVIDED EMAIL
   Users.findOne({
     email: req.body.email
-  }).populate('friends')
+  }).populate('friends', 'name image _id')
     .then(async user => {
       if (!user) {
         return res.status(400).send(loginError)
@@ -46,6 +46,7 @@ router.post('/auth/login', (req, res) => {
         //ALWAYS REMOVE THE PASSWORD FROM THE USER OBJECT
         delete user._doc.hash
         req.session.uid = user._id
+        user
         res.send(user)
       }
     }).catch(err => {

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
+import Messages from './views/Messages.vue'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
       name: 'profile',
       props: true,
       component: Profile
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: Messages
     }
   ]
 })

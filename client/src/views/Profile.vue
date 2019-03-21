@@ -17,17 +17,21 @@
     <div class="row mx-0">
       <div class="col-12 col-md-6 offset-md-3">
         <p class="mt-3 mx-3 text-justify">{{activeProfile.bio}}</p>
-        <button class="btn btn-sm btn-info" @click="addFriend(activeProfile, user)">Add Contact</button>
+        <button v-if="!determineFriendship(activeProfile)" class="btn btn-sm btn-info" @click="addFriend(activeProfile, user)">Add
+          Contact</button>
         <hr>
+        <button class="btn btn-info mt-2" data-toggle="modal" data-target="#agreementModal">Make a deal</button>
+        <Agreement :profileId="activeProfile._id" :user="user"></Agreement>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Agreement from '@/components/Agreement-comp.vue'
   export default {
     name: "Profile",
-    props: [],
+    props: ["profileId"],
     data() {
       return {}
     },
@@ -40,16 +44,17 @@
       }
     },
     methods: {
-      addFriend(result, user) {
-        let newFriend = {
-          name: result.name,
-          userId: result._id,
-          image: result.image
-        }
-        user.friends.push(newFriend)
+      addFriend(profile, user) {
+        user.friends.push(profile._id)
         this.$store.dispatch('addFriend', user)
+        this.determineFriendship(profile)
       },
+      determineFriendship(result, newFriend) {
+        return this.user.friends.find(f => f._id == result._id || f == result._id) //this temp fix will work if friends are just id's but you do want to eventually populate the friends again
+      }
     },
-    components: {}
+    components: {
+      Agreement
+    }
   }
 </script>

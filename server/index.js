@@ -43,6 +43,8 @@ server.use((req, res, next) => {
 //ROUTES
 let userRoutes = require('./server-assets/routes/user')
 server.use('/api/users', userRoutes)
+let agsRoutes = require('./server-assets/routes/agreement')
+server.use('/api/agreements', agsRoutes)
 
 
 

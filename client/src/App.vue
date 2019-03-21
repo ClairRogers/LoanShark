@@ -16,7 +16,7 @@
             <a class="nav-link" href="#">My Contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Messages</a>
+            <a class="nav-link" @click="goMessages">Messages</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" @click="logOut">Logout</a>
@@ -90,6 +90,9 @@
       },
       goHome() {
         router.push({ name: 'home' })
+      },
+      goMessages() {
+        router.push({ name: 'messages' })
       }
     },
     components: {

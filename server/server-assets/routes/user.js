@@ -184,4 +184,12 @@ router.delete('/:id', (req, res, next) => {
     })
 })
 
+//remove friend from contact list
+// router.put('/:id/remove', (req, res, next) => {
+//   Users.find({ _id: req.session.uid })
+//     .then(user => {
+//     user.friends.findByIdAndRemove({})
+//   })
+// })
+
 module.exports = router
