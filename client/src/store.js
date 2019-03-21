@@ -24,7 +24,8 @@ export default new Vuex.Store({
     searchResults: [],
     lends: [],
     borrows: [],
-    activeProfile: {}
+    activeProfile: {},
+    messages: []
   },
   mutations: {
     setUser(state, user) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     setActiveProfile(state, data) {
       state.activeProfile = data
+    },
+    setMessages(state, data) {
+      state.messages = data
     }
   },
   actions: {
@@ -128,6 +132,12 @@ export default new Vuex.Store({
       api.post('agreements/', payload)
         .then(res => {
           console.log('agreement initiated')
+        })
+    },
+    getMessages({ commit, dispatch }) {
+      api.get('/agreements/negotiations')
+        .then(res => {
+          commit('setMessages', res.data)
         })
     }
     //#endregion

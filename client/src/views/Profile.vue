@@ -50,7 +50,11 @@
         this.determineFriendship(profile)
       },
       determineFriendship(result, newFriend) {
-        return this.user.friends.find(f => f._id == result._id || f == result._id) //this temp fix will work if friends are just id's but you do want to eventually populate the friends again
+        if (this.user.friends) {
+          return this.user.friends.find(f => f._id == result._id || f == result._id) //this temp fix will work if friends are just id's but you do want to eventually populate the friends again
+        } else {
+          return
+        }
       }
     },
     components: {

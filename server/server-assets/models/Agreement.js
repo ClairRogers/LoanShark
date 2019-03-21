@@ -22,7 +22,8 @@ let schema = new Schema({
   timeRemaining: { type: Number, default: 30 },
   agreedUpon: { type: Boolean, required: true, default: false },
   //if true, in borrower's box, if false in lender's box
-  sent: { type: Boolean, required: true, default: false }
+  sent: { type: Boolean, required: true, default: false },
+  initiated: { type: Boolean, required: true, default: false }
 }, { timestamps: true })
 
 module.exports = mongoose.model(agreementSchemaName, schema)

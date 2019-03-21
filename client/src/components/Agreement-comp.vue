@@ -13,21 +13,21 @@
           </div>
           <div class="modal-body">
             <form @submit.prevent="initiateAgreement">
-              <div class="input-group">
+              <div class="input-group" :class="[newAgreement.initiated ? 'disabled' : '' ]">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="">Title and Item</span>
                 </div>
-                <input type="text" v-model="newAgreement.title" class="form-control">
-                <input type="text" v-model="newAgreement.item" vclass="form-control">
+                <input type="text" v-model="newAgreement.title" required class="form-control">
+                <input type="text" v-model="newAgreement.item" required class="form-control">
               </div>
               <div class="input-group input-group-lg my-5">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-lg">Description</span>
                 </div>
-                <input v-model="newAgreement.description" type="text" class="form-control" aria-label="Large"
+                <input v-model="newAgreement.description" required type="text" class="form-control" aria-label="Large"
                   aria-describedby="inputGroup-sizing-sm">
               </div>
-              <button @click="showDetails = !showDetails" type="submit" class="btn btn-info">Start Agreement</button>
+              <button type="submit" class="btn btn-info">Start Agreement</button>
             </form>
             <form v-if="showDetails">
               <div v-if="showDetails" class="input-group my-5">
@@ -78,13 +78,14 @@
           title: '',
           description: '',
           authorId: this.user._id,
-          // terms: [term],
+          terms: [],
           //to get whole user object use populate mongoose method in agreement routes
           lender: this.user._id,
           borrower: this.profileId,
-          timeRemaining: 0
+          timeRemaining: 0,
+          initiated: true
         },
-        showDetails: false
+        showDetails: false,
       }
     },
     computed: {
@@ -92,6 +93,7 @@
     methods: {
       initiateAgreement() {
         this.$store.dispatch('initiateAgreement', this.newAgreement)
+        this.showDetails = !this.showDetails
       },
       editAgreement() {
         this.$store.dispatch('editAgreement')
