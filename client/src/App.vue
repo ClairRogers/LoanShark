@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bgc">
-      <a class="navbar-brand" href="#">LoanShark</a>
+      <a class="navbar-brand logo" href="#"><i class="">LoanShark</i><img src="./assets/LoanShark-white.png"
+          width="40px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,8 +27,8 @@
       </div>
     </nav>
     <!-- Modal -->
-    <div @click="searchTerm = '' " class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel"
-      aria-hidden="true">
+    <div @click="searchTerm = '' " class="modal fade" id="searchModal" tabindex="-1" role="dialog"
+      aria-labelledby="searchModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -137,5 +138,10 @@
     background-color: #ffffff;
     background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
     background-attachment: fixed;
+  }
+
+  .logo {
+    font-family: 'Prosto One', cursive;
+    font-size: 30px;
   }
 </style>
