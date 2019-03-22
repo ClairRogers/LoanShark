@@ -2,10 +2,13 @@
   <div class="messages container-fluid">
     <div class="row">
       <div class="col-12 col-md-8 offset-md-2">
-        <h2><span class="mr-5" @click="showMessages = !showMessages">Pending Lends</span> <span
-            @click="showMessages = !showMessages">Pending Borrows</span></h2>
+        <h3 class="my-3"><span class="mr-5 font pointer" :class="showMessages ? 'selected' : ''"
+            @click="showMessages = !showMessages">Pending
+            Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''"
+            @click="showMessages = !showMessages">Pending
+            Borrows</span></h3>
 
-        <div v-if="showMessage" v-for="message in lendMessages" class="card text-center my-2">
+        <div v-if="showMessages" v-for="message in lendMessages" class="card text-center my-2">
           <div class="card-header">
             <h3>{{message.title}}</h3>
           </div>
@@ -16,6 +19,8 @@
               data-target="#agreementModal">View
               Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
+            <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply</h5>
+            <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
           </div>
           <div class="card-footer text-muted">
             From: {{message.lender.name}}
@@ -23,7 +28,7 @@
         </div>
 
 
-        <div v-if="!showMessage" v-for="message in borrowMessages" class="card text-center my-2">
+        <div v-if="!showMessages" v-for="message in borrowMessages" class="card text-center my-2">
           <div class="card-header">
             <h3>{{message.title}}</h3>
           </div>
@@ -33,6 +38,8 @@
             <button @click="setActiveMessage(message)" class="btn btn-sm btn-info" data-toggle="modal"
               data-target="#agreementModal">View Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
+            <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply</h5>
+            <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
           </div>
           <div class="card-footer text-muted">
             From: {{message.lender.name}}
@@ -57,7 +64,7 @@
     props: [],
     data() {
       return {
-        showMessage: true
+        showMessages: true
       }
     },
     computed: {
@@ -84,3 +91,13 @@
     }
   }
 </script>
+
+<style>
+  .selected {
+    border-bottom: solid 5px #13abc4;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+</style>

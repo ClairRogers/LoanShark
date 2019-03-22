@@ -144,4 +144,8 @@
     font-family: 'Prosto One', cursive;
     font-size: 30px;
   }
+
+  .font {
+    font-family: 'Prosto One', cursive;
+  }
 </style>
