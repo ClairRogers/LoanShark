@@ -10,7 +10,7 @@
             <h5 class="text-right faded"><i data-toggle="modal" data-target="#editModal" title="edit"
                 class="far fa-edit"></i></h5>
             <h2 class="mt-4">{{user.name}} <span v-if="user.paypal"><i title="PayPal verified"
-                  class="fab fa-paypal fa-xs ml-1 faded"></i></span></h2>
+                  class="fab fa-paypal fa-xs ml-1 faded noClick"></i></span></h2>
             <h4>User Rating:</h4>
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
@@ -104,5 +104,9 @@
 
   .white {
     background-color: white;
+  }
+
+  .noClick {
+    cursor: default;
   }
 </style>

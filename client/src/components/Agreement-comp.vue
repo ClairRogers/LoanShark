@@ -14,39 +14,26 @@
 
 
           <div class="modal-body">
-            <form @submit.prevent="initiateAgreement">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Title and Item</span>
-                </div>
-                <input type="text" v-model="newAgreement.title" required class="form-control" :disabled="activeAg.initiated">
-                <input type="text" v-model="newAgreement.item" required class="form-control" :disabled="activeAg.initiated">
-              </div>
-              <div class="input-group input-group-lg my-5">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-lg">Description</span>
-                </div>
-                <input v-model="newAgreement.description" required type="text" class="form-control" aria-label="Large"
-                  aria-describedby="inputGroup-sizing-sm" :disabled="activeAg.initiated">
-              </div>
-              <button type="submit" class="btn btn-info" v-if="!activeAg.initiated">Start
-                Agreement</button>
-            </form>
+
+            <!-- basic agreement -->
+            <initAg :newAgreement="newAgreement"></initAg>
+            <!-- end ba -->
 
             <ol class="text-left">
-              <li v-for="term in this.newAgreement.terms">{{term}}</li>
+              <li v-for="term in this.newAgreement.terms">{{term.description}}</li>
             </ol>
 
             <form v-if="showDetails">
               <div v-if="showDetails" class="input-group my-5">
-                <input v-model="term" type="text" class="form-control" aria-label="Text input with checkbox">
+                <input v-model="term.description" type="text" class="form-control"
+                  aria-label="Text input with checkbox">
                 <br>
                 <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
               <hr>
               <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {{newAgreement.timeRemaining + ' Days'}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -55,8 +42,6 @@
                   <a class="dropdown-item" @click="newAgreement.timeRemaining = 90">90 Days</a>
                 </div>
               </div>
-              <hr>
-              <button @click="editAgreement" class="btn btn-info">Make Agreement</button>
             </form>
 
 
@@ -64,7 +49,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" @click="editAgreement" class="btn btn-info">Make Agreement</button>
           </div>
         </div>
       </div>
@@ -73,6 +58,7 @@
 </template>
 
 <script>
+  import initAg from '@/components/Initiate-ag-comp.vue'
   export default {
     name: "agreement",
     props: ["profileId", "user"],
@@ -88,10 +74,15 @@
           lender: this.user._id,
           borrower: this.profileId,
           timeRemaining: 0,
-          initiated: true
+          initiated: true,
+          sent: false
         },
         showDetails: false,
-        term: '',
+        term: {
+          authorId: this.user._id,
+          description: '',
+          agreedUpon: true
+        },
         editTerm: false
       }
     },
@@ -101,19 +92,27 @@
       }
     },
     methods: {
-      initiateAgreement() {
-        this.$store.dispatch('initiateAgreement', this.newAgreement)
-        this.showDetails = !this.showDetails
-      },
       editAgreement() {
         this.newAgreement._id = this.$store.state.activeAg._id
-        this.$store.dispatch('editAgreement', this.newAgreement)
+        this.newAgreement.sent = !this.newAgreement.sent
+        let agreement = JSON.parse(JSON.stringify(this.newAgreement))
+        this.$store.dispatch('editAgreement', agreement)
+        this.newAgreement.title = ''
+        this.newAgreement.item = ''
+        this.newAgreement.description = ''
+        this.newAgreement.terms = []
+        this.showDetails = false
+        //  let list = JSON.parse(JSON.stringify(this.newList))
+        // this.$store.dispatch('createList', list)
+        // this.newList.title = ''
       },
       addTerm() {
         this.newAgreement.terms.push(this.term)
         this.term = ''
       }
     },
-    components: {}
+    components: {
+      initAg
+    }
   }
 </script>

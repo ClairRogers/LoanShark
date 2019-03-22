@@ -1,27 +1,34 @@
 <template>
   <div class="Profile container-fluid">
     <div class="row mt-4">
-      <div class="col-6 col-md-3 offset-md-3">
-        <img :src="activeProfile.image" alt="User image" class="round ml-3 img-fluid">
-      </div>
-      <div class="col-6 col-md-3 pr-4">
-        <!-- <h5 class="text-right faded"><i title="edit" class="far fa-edit"></i></h5> -->
-        <h2 class="mt-4">{{activeProfile.name}} <i title="PayPal verified" class="fab fa-paypal fa-xs ml-1 faded"></i></h2>
-        <h4>User Rating:</h4>
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
-            aria-valuemax="100">{{activeProfile.score}}%</div>
+      <div class="col-12 col-md-6 offset-md-3 white">
+        <div class="row py-3">
+          <div class="col-6">
+            <img :src="activeProfile.image" alt="User image" class="round ml-3 img-fluid">
+          </div>
+          <div class="col-6 pr-4">
+            <!-- <h5 class="text-right faded"><i title="edit" class="far fa-edit"></i></h5> -->
+            <h2 class="mt-4">{{activeProfile.name}} <i v-if="activeProfile.paypal" title="PayPal verified"
+                class="fab fa-paypal fa-xs ml-1 faded"></i></h2>
+            <h4>User Rating:</h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">{{activeProfile.score}}%</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row mx-0">
-      <div class="col-12 col-md-6 offset-md-3">
-        <p class="mt-3 mx-3 text-justify">{{activeProfile.bio}}</p>
-        <button v-if="!determineFriendship(activeProfile)" class="btn btn-sm btn-info" @click="addFriend(activeProfile, user)">Add
-          Contact</button>
-        <hr>
-        <button class="btn btn-info mt-2" data-toggle="modal" data-target="#agreementModal">Make a deal</button>
-        <Agreement :profileId="activeProfile._id" :user="user"></Agreement>
+        <div class="row mx-0 pb-3">
+          <div class="col-12">
+            <p class="mt-3 mx-3 text-justify">{{activeProfile.bio}}</p>
+            <button v-if="!determineFriendship(activeProfile)" class="btn btn-sm btn-info"
+              @click="addFriend(activeProfile, user)">Add
+              Contact</button>
+            <hr>
+            <button class="btn btn-info mt-2" data-toggle="modal" data-target="#agreementModal">Make a deal</button>
+            <Agreement :profileId="activeProfile._id" :user="user"></Agreement>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -62,3 +69,9 @@
     }
   }
 </script>
+
+<style>
+  .white {
+    background-color: #fff;
+  }
+</style>

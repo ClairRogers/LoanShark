@@ -26,7 +26,8 @@ export default new Vuex.Store({
     borrows: [],
     activeProfile: {},
     messages: [],
-    activeAg: {}
+    activeAg: {},
+    activeMessage: {}
   },
   mutations: {
     setUser(state, user) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     setActiveAg(state, data) {
       state.activeAg = data
+    },
+    setActiveMessage(state, data) {
+      state.activeMessage = data
     }
   },
   actions: {
@@ -87,7 +91,7 @@ export default new Vuex.Store({
         })
     },
     //#endregion
-
+    //#region USER
     searchUser({ commit, dispatch }, payload) {
       //if statement prevents errors when deleting input
       if (payload) {
@@ -128,7 +132,7 @@ export default new Vuex.Store({
         })
     },
 
-
+    //endregion
 
     //#region AGREEMENTS
     initiateAgreement({ commit, dispatch }, payload) {
@@ -148,10 +152,26 @@ export default new Vuex.Store({
     editAgreement({ commit, dispatch }, payload) {
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
-          commit('setActiveAg', res.data)
+          let blank = {}
+          commit('setActiveAg', blank)
         })
-    }
+    },
+
+    deleteAg({ commit, dispatch }, payload) {
+      api.delete('/agreements/' + payload._id)
+        .then(res => {
+          dispatch('getMessages')
+        })
+    },
     //#endregion
+    //#start MESSAGE
+    setActiveMessage({ commit, dispatch }, payload) {
+      commit('setActiveMessage', payload)
+    }
+
+    //#endregion
+
+
 
   }
 

@@ -39,7 +39,7 @@ router.get('/negotiations', (req, res, next) => {
       { borrower: req.session.uid }
     ]
   })
-  userAgs.find({ agreedUpon: false })
+  userAgs.find({ agreedUpon: false }).populate('lender', 'name _id image').populate('borrower', 'name _id image')
     .then(ags => {
       res.send(ags)
     })
@@ -76,9 +76,8 @@ router.get('/active', (req, res, next) => {
 
 //delete/archive a contract
 router.delete('/:id', (req, res, next) => {
-  Ags.findById({ _id: req.params.id }
+  Ags.findById(req.params.id)
     .then(ag => {
-
       if (ag.agreedUpon == true && ag.authorId.toString() == req.session.uid.toString()) {
         ag.closed = true
       } else if (ag.lender.toString() == req.session.uid.toString() || ag.borrower.toString() == req.session.uid.toString()) {
@@ -92,9 +91,10 @@ router.delete('/:id', (req, res, next) => {
         })
       }
     })
-  )
+
 })
 
+// 
 
 
 

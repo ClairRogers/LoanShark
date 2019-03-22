@@ -1,6 +1,7 @@
 <template>
   <div class="edit-modal">
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -18,7 +19,10 @@
               Email:
               <input v-model="editedUser.email" class="form-control mb-3" type="text" placeholder="">
               Profile Image (URL):
-              <input v-model="editedUser.image" class="form-control" type="text" placeholder="">
+              <input v-model="editedUser.image" class="form-control mb-3" type="text" placeholder="">
+              PayPal™ Email: <i title="Please use the email associated with your verified PayPal account" 
+                class="fas fa-question-circle fa-sm noClick faded"></i>
+              <input v-model="editedUser.paypal" class="form-control" type="text" placeholder="">
               <button type="submit" class="btn btn-info mt-3 text-right">Save changes</button>
             </form>
           </div>
