@@ -11,8 +11,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
+
           <div class="modal-body">
-            <!-- basic agreement -->
             <form @submit.prevent="initiateAgreement">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -33,38 +34,39 @@
               <button type="submit" class="btn btn-info" v-if="!activeAg.initiated">Start
                 Agreement</button>
             </form>
-            <!-- end ba -->
-            <!--this is the part where we add and display terms -->
+
             <ol class="text-left">
-              <li v-for="term in this.newAgreement.terms">{{term.description}}</li>
+              <li v-for="term in this.newAgreement.terms">{{term}}</li>
             </ol>
-            <!--had v-ifs on the following form and div tags with showdetails (activeAg.initiated) as value-->
-            <form>
-              <div class="input-group my-5">
-                <input v-model="term.description" type="text" class="form-control"
-                  aria-label="Text input with checkbox">
+
+            <form v-if="showDetails">
+              <div v-if="showDetails" class="input-group my-5">
+                <input v-model="term" type="text" class="form-control" aria-label="Text input with checkbox">
                 <br>
                 <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
               <hr>
               <div class="dropdown">
-                <!--changed newAgreement to activeAg-->
                 <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{activeAg.timeRemaining + ' Days'}}
+                  {{newAgreement.timeRemaining + ' Days'}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 30">30 Days</a>
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 60">60 Days</a>
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 90">90 Days</a>
+                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 30">30 Days</a>
+                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 60">60 Days</a>
+                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 90">90 Days</a>
                 </div>
               </div>
+              <hr>
+              <button @click="editAgreement" class="btn btn-info">Make Agreement</button>
             </form>
+
+
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" @click="editAgreement" class="btn btn-info">Make Agreement</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -73,53 +75,47 @@
 </template>
 
 <script>
-  import initAg from '@/components/Initiate-ag-comp.vue'
-
-
-
   export default {
     name: "agreement",
     props: ["profileId", "user"],
     data() {
       return {
         newAgreement: {
-          activeAg() {
-            return this.$store.state.activeAg
-          },
-          user() {
-            return this.$store.state.user
-          }
+          item: '',
+          title: '',
+          description: '',
+          authorId: this.user._id,
+          terms: [],
+          //to get whole user object use populate mongoose method in agreement routes
+          lender: this.user._id,
+          borrower: this.profileId,
+          timeRemaining: 0,
+          initiated: true
         },
-        methods: {
-          editAgreement() {
-            this.newAgreement._id = this.$store.state.activeAg._id
-            this.newAgreement.sent = !this.newAgreement.sent
-            let agreement = JSON.parse(JSON.stringify(this.newAgreement))
-            this.$store.dispatch('editAgreement', agreement)
-            this.newAgreement.title = ''
-            this.newAgreement.item = ''
-            this.newAgreement.description = ''
-            this.newAgreement.terms = []
-            this.showDetails = false
-            //  let list = JSON.parse(JSON.stringify(this.newList))
-            // this.$store.dispatch('createList', list)
-            // this.newList.title = ''
-          },
-          addTerm() {
-            this.newAgreement.terms.push(this.term)
-            this.term = ''
-          },
-          initiateAgreement() {
-            this.$store.dispatch('initiateAgreement', this.newAgreement)
-            // this.showDetails = !this.showDetails
-          },
-        },
-        components: {
-          initAg,
-          editParts
-        }
+        showDetails: false,
+        term: '',
+        editTerm: false
       }
-
-    }
+    },
+    computed: {
+      activeAg() {
+        return this.$store.state.activeAg
+      }
+    },
+    methods: {
+      initiateAgreement() {
+        this.$store.dispatch('initiateAgreement', this.newAgreement)
+        this.showDetails = !this.showDetails
+      },
+      editAgreement() {
+        this.newAgreement._id = this.$store.state.activeAg._id
+        this.$store.dispatch('editAgreement', this.newAgreement)
+      },
+      addTerm() {
+        this.newAgreement.terms.push(this.term)
+        this.term = ''
+      }
+    },
+    components: {}
   }
 </script>

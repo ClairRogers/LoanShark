@@ -48,14 +48,12 @@
       </div>
     </div>
 
-    <Message></Message>
-    <Agreement></Agreement>
+    <Contract></Contract>
   </div>
 </template>
 
 <script>
-  import Message from '@/components/Message.vue'
-  import Agreement from '@/components/Agreement-comp.vue'
+  import Contract from '@/components/Contract-comp.vue'
   export default {
     name: "messages",
     mounted() {
@@ -89,8 +87,7 @@
       }
     },
     components: {
-      Message,
-      Agreement
+      Contract
     }
   }
 </script>
