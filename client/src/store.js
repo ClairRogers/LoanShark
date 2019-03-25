@@ -111,8 +111,14 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
         })
-
     },
+    removeFriend({ commit, dispatch }, payload) {
+      api.put('users/' + payload.userId + '/remove', payload)
+        .then(res => {
+          commit('setUser', res.data)
+        })
+    },
+
     setActiveProfile({ commit, dispatch }, payload) {
       commit('setActiveProfile', payload)
       router.push({ name: 'profile', params: { profileId: payload._id } })

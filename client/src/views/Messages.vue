@@ -75,6 +75,9 @@
       borrowMessages() {
         let user = this.$store.state.user
         return this.$store.state.messages.filter(m => m.borrower._id == user._id)
+      },
+      user() {
+        return this.$store.state.user
       }
     },
     methods: {

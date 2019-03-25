@@ -36,7 +36,7 @@
     methods: {
       initiateAgreement() {
         this.$store.dispatch('initiateAgreement', this.newAgreement)
-        this.showDetails = !this.showDetails
+        // this.showDetails = !this.showDetails
       },
     },
     components: {}

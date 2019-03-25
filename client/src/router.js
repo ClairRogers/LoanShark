@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
 import Messages from './views/Messages.vue'
+import Contacts from './views/Contacts.vue'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
       path: '/messages',
       name: 'messages',
       component: Messages
+    },
+    {
+      path: '/contacts',
+      name: 'contacts',
+      component: Contacts
     }
   ]
 })

@@ -14,10 +14,11 @@
             <a class="nav-link" @click="goHome">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My Contacts</a>
+            <a class="nav-link" @click="goContacts">My Contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="goMessages">Messages</a>
+            <a class="nav-link" @click="goMessages">Messages
+              <span>{{unreadMessages()}}</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" @click="logOut">Logout</a>
@@ -62,6 +63,7 @@
     mounted() {
       //Authenticate on startup
       this.$store.dispatch('authenticate')
+      this.$store.dispatch('getMessages')
     },
     data() {
       return {
@@ -94,11 +96,32 @@
       },
       goMessages() {
         router.push({ name: 'messages' })
+      },
+      goContacts() {
+        router.push({ name: 'contacts' })
+      },
+      unreadMessages() {
+        if (this.lendMessages.length + this.borrowMessages.length == 0) {
+          return ''
+        } else {
+          return `(${this.lendMessages.length + this.borrowMessages.length})`
+        }
+
       }
     },
     components: {
       search,
       router
+    },
+    computed: {
+      lendMessages() {
+        let user = this.$store.state.user
+        return this.$store.state.messages.filter(m => m.lender._id == user._id).filter(m => m.sent == false)
+      },
+      borrowMessages() {
+        let user = this.$store.state.user
+        return this.$store.state.messages.filter(m => m.borrower._id == user._id).filter(m => m.sent == true)
+      }
     }
   }
 </script>
