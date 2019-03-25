@@ -6,14 +6,29 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="contractModalLabel">Contract</h5>
+            <h5 class="modal-title" id="contractModalLabel">{{activeMessage.title}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <h3>{{activeMessage.item}}</h3>
+            <h4>{{activeMessage.description}}</h4>
           </div>
+          <!-- terms stuff -->
+          <div v-for="term in terms">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input type="checkbox" @click="term.agreedUpon = !term.agreedUpon"
+                    aria-label="Checkbox for following text input" checked>
+                </div>
+              </div>
+              <input type="text" class="form-control" aria-label="Text input with checkbox">
+            </div>
+          </div>
+
+
           <div class="modal-footer">
             <button class="btn btn-success btn-sm">Agree to Terms</button>
             <button class="btn btn-info btn-sm">Renegotiate</button>
@@ -36,6 +51,9 @@
     computed: {
       activeMessage() {
         return this.$store.state.activeMessage
+      },
+      terms() {
+        return this.$store.state.activeMessage.terms
       }
     },
     methods: {},

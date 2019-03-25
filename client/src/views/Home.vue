@@ -11,7 +11,7 @@
                 class="far fa-edit"></i></h5>
             <h2 class="mt-4">{{user.name}} <span v-if="user.paypal"><i title="PayPal verified"
                   class="fab fa-paypal fa-xs ml-1 faded noClick"></i></span></h2>
-            <h4>User Rating:</h4>
+            <h5>User Rating:</h5>
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
                 aria-valuemax="100">{{user.score}}%</div>

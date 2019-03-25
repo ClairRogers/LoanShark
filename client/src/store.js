@@ -138,6 +138,13 @@ export default new Vuex.Store({
         })
     },
 
+    // getUser({ commit, dispatch }, payload) {
+    //   api.get('users/' + payload)
+    //     .then(res => {
+    //       commit('setUser', res.data)
+    //     })
+    // },
+
     //endregion
 
     //#region AGREEMENTS

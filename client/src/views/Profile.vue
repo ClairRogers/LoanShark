@@ -10,7 +10,7 @@
             <!-- <h5 class="text-right faded"><i title="edit" class="far fa-edit"></i></h5> -->
             <h2 class="mt-4">{{activeProfile.name}} <i v-if="activeProfile.paypal" title="PayPal verified"
                 class="fab fa-paypal fa-xs ml-1 faded"></i></h2>
-            <h4>User Rating:</h4>
+            <h5>User Rating:</h5>
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
                 aria-valuemax="100">{{activeProfile.score}}%</div>
@@ -22,6 +22,8 @@
             <p class="mt-3 mx-3 text-justify">{{activeProfile.bio}}</p>
             <button v-if="!determineFriendship(activeProfile)" class="btn btn-sm btn-info"
               @click="addFriend(activeProfile, user)">Add
+              Contact</button>
+            <button class="btn btn-sm btn-danger" @click="removeFriend(activeProfile._id)" v-else>Remove
               Contact</button>
             <hr>
             <button class="btn btn-info mt-2" data-toggle="modal" data-target="#agreementModal">Make a deal</button>
@@ -62,6 +64,9 @@
         } else {
           return
         }
+      },
+      removeFriend(friend) {
+        this.$store.dispatch('removeFriend', { userId: this.user._id, friendId: friend })
       }
     },
     components: {

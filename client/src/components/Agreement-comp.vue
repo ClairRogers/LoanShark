@@ -36,12 +36,12 @@
             </form>
 
             <ol class="text-left">
-              <li v-for="term in this.newAgreement.terms">{{term}}</li>
+              <li v-for="term in newAgreement.terms">{{term.description}}</li>
             </ol>
 
             <form v-if="showDetails">
               <div v-if="showDetails" class="input-group my-5">
-                <input v-model="term" type="text" class="form-control" aria-label="Text input with checkbox">
+                <input v-model="term.description" type="text" class="form-control">
                 <br>
                 <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
@@ -52,13 +52,11 @@
                   {{newAgreement.timeRemaining + ' Days'}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 30">30 Days</a>
-                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 60">60 Days</a>
-                  <a class="dropdown-item" @click="newAgreement.timeRemaining = 90">90 Days</a>
+                  <a class="dropdown-item" @click="activeAg.timeRemaining = 30">30 Days</a>
+                  <a class="dropdown-item" @click="activeAg.timeRemaining = 60">60 Days</a>
+                  <a class="dropdown-item" @click="activeAg.timeRemaining = 90">90 Days</a>
                 </div>
               </div>
-              <hr>
-              <button @click="editAgreement" class="btn btn-info">Make Agreement</button>
             </form>
 
 
@@ -66,7 +64,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" @click="editAgreement" class="btn btn-info">Make Agreement</button>
           </div>
         </div>
       </div>
@@ -93,7 +91,11 @@
           initiated: true
         },
         showDetails: false,
-        term: '',
+        term: {
+          authorId: this.user._id,
+          description: '',
+          agreedUpon: true
+        },
         editTerm: false
       }
     },
@@ -109,11 +111,19 @@
       },
       editAgreement() {
         this.newAgreement._id = this.$store.state.activeAg._id
-        this.$store.dispatch('editAgreement', this.newAgreement)
+        this.newAgreement.sent = !this.newAgreement.sent
+        let agreement = JSON.parse(JSON.stringify(this.newAgreement))
+        this.$store.dispatch('editAgreement', agreement)
+        this.newAgreement.title = ''
+        this.newAgreement.item = ''
+        this.newAgreement.description = ''
+        this.newAgreement.terms = []
+        this.showDetails = false
       },
       addTerm() {
-        this.newAgreement.terms.push(this.term)
-        this.term = ''
+        let newTerm = JSON.parse(JSON.stringify(this.term))
+        this.newAgreement.terms.push(newTerm)
+        this.term.description = ''
       }
     },
     components: {}

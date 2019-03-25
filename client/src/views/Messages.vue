@@ -16,7 +16,7 @@
             <h5 class="card-title">For: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
             <button type="button" class="btn btn-sm btn-info" @click="setActiveMessage(message)" data-toggle="modal"
-              data-target="#agreementModal">View
+              data-target="#contractModal">View
               Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply</h5>
@@ -27,7 +27,6 @@
           </div>
         </div>
 
-
         <div v-if="!showMessages" v-for="message in borrowMessages" class="card text-center my-2">
           <div class="card-header">
             <h3>{{message.title}}</h3>
@@ -36,7 +35,7 @@
             <h5 class="card-title">For: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
             <button @click="setActiveMessage(message)" class="btn btn-sm btn-info" data-toggle="modal"
-              data-target="#agreementModal">View Contract</button>
+              data-target="#contractModal">View Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
