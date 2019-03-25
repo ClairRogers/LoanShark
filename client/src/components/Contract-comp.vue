@@ -20,18 +20,20 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input type="checkbox" @click="term.agreedUpon = !term.agreedUpon"
-                    aria-label="Checkbox for following text input" checked>
+                  <input type="checkbox" @click="term.agreedUpon = false" aria-label="Checkbox for following text input"
+                    checked :disabled="!term.agreedUpon">
                 </div>
               </div>
-              <input type="text" class="form-control" aria-label="Text input with checkbox">
+              <input type="text" class="form-control" v-model="term.description" aria-label="Text input with checkbox"
+                :disabled="term.agreedUpon">
+              </input>
             </div>
           </div>
 
 
           <div class="modal-footer">
-            <button class="btn btn-success btn-sm">Agree to Terms</button>
-            <button class="btn btn-info btn-sm">Renegotiate</button>
+            <button class="btn btn-success btn-sm" @click="agree">Agree to Terms</button>
+            <button class="btn btn-info btn-sm" @click="renegotiate">Renegotiate</button>
             <button type="button" class="btn btn-danger btn-sm">I'm Out!</button>
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
           </div>
@@ -46,7 +48,8 @@
     name: "contract",
     props: [],
     data() {
-      return {}
+      return {
+      }
     },
     computed: {
       activeMessage() {
@@ -56,7 +59,16 @@
         return this.$store.state.activeMessage.terms
       }
     },
-    methods: {},
+    methods: {
+      renegotiate() {
+
+      },
+      agree() {
+        //maybe put debugger here; getting timeout error. trying to pass in updated bool with entire object.
+        this.activeMessage.agreedUpon = true
+        this.$store.dispatch('acceptAgreement', this.activeMessage)
+      }
+    },
     components: {}
   }
 </script>

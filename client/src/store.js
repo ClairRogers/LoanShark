@@ -170,6 +170,13 @@ export default new Vuex.Store({
         })
     },
 
+    acceptAgreement({ commit, dispatch }, payload) {
+      api.put('/agreements/' + payload._id, payload)
+        .then(res => {
+          commit('setActiveAg', res.data)
+        })
+    },
+
     deleteAg({ commit, dispatch }, payload) {
       api.delete('/agreements/' + payload._id)
         .then(res => {
