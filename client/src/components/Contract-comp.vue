@@ -21,7 +21,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text">
                   <input type="checkbox" @click="term.agreedUpon = false" aria-label="Checkbox for following text input"
-                    checked :disabled="!term.agreedUpon">
+                    checked :disabled="!term.agreedUpon || !determineAccess()">
                 </div>
               </div>
               <input type="text" class="form-control" v-model="term.description" aria-label="Text input with checkbox"
@@ -32,9 +32,14 @@
 
 
           <div class="modal-footer">
-            <button class="btn btn-success btn-sm" @click="agree">Agree to Terms</button>
-            <button class="btn btn-info btn-sm" @click="renegotiate">Renegotiate</button>
-            <button type="button" class="btn btn-danger btn-sm">I'm Out!</button>
+
+            <button class="btn btn-success btn-sm" @click="agree" :disabled="!determineAccess()"
+              data-dismiss="modal">Agree to Terms</button>
+            <button class="btn btn-info btn-sm" @click="renegotiate" :disabled="!determineAccess() || !editedTerm()"
+              data-dismiss="modal">Renegotiate</button>
+
+            <button type="button" class="btn btn-danger btn-sm" @click="deleteAg(activeMessage)"
+              data-dismiss="modal">I'm Out!</button>
             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -57,16 +62,39 @@
       },
       terms() {
         return this.$store.state.activeMessage.terms
+      },
+      user() {
+        return this.$store.state.user
       }
     },
     methods: {
       renegotiate() {
-
+        this.$store.activeMessage.sent = !this.$store.activeMessage.sent
       },
       agree() {
-        //maybe put debugger here; getting timeout error. trying to pass in updated bool with entire object.
         this.activeMessage.agreedUpon = true
         this.$store.dispatch('acceptAgreement', this.activeMessage)
+      },
+      determineAccess() {
+        if (this.$store.state.activeMessage.description) {
+          if (this.activeMessage.lender._id == this.user._id && this.activeMessage.sent == false) {
+            return true
+          } else if (this.activeMessage.borrower._id == this.user._id && this.activeMessage.sent == true) {
+            return true
+          } else {
+            return false
+          }
+        }
+      },
+      deleteAg(message) {
+        this.$store.dispatch('deleteAg', message)
+      },
+      editedTerm() {
+        if (this.terms.find(t => t.agreedUpon == false)) {
+          return true
+        } else {
+          return false
+        }
       }
     },
     components: {}

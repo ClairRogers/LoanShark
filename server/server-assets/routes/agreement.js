@@ -17,16 +17,28 @@ router.post('/', (req, res, next) => {
 
 //EDIT an in-progress agreement
 router.put('/:id', (req, res, next) => {
-  if (req.body.lender.toString() == req.session.uid.toString() || req.body.borrower.toString() == req.session.uid.toString()) {
-    delete req.body.createdAt
-    Ags.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
-      .then(ag => {
-        res.send(ag)
-      })
-      .catch(err => {
-        console.log(err)
-        next()
-      })
+  if (typeof req.body.lender == 'object' || typeof req.body.borrower == 'object') {
+    if (req.body.lender._id.toString() == req.session.uid.toString() || req.body.borrower._id.toString() == req.session.uid.toString()) {
+      Ags.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+        .then(ag => {
+          res.send(ag)
+        })
+        .catch(err => {
+          console.log(err)
+          next()
+        })
+    }
+  } else {
+    if (req.body.lender.toString() == req.session.uid.toString() || req.body.borrower.toString() == req.session.uid.toString()) {
+      Ags.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true })
+        .then(ag => {
+          res.send(ag)
+        })
+        .catch(err => {
+          console.log(err)
+          next()
+        })
+    }
   }
 })
 
