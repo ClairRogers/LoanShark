@@ -6,6 +6,7 @@ let agreementSchemaName = 'Agreement'
 let term = new Schema({
   authorId: { type: ObjectId, ref: 'User', required: true },
   description: { type: String, required: true },
+  oldDescription: { type: String },
   agreedUpon: { type: Boolean, required: true, default: true }
 }, { timestamps: true })
 

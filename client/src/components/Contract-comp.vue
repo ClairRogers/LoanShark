@@ -11,17 +11,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" v-if="activeMessage.description">
+            <div class="d-flex justify-content-between mb-3"><span>Lender: {{activeMessage.lender.name}}</span>
+              <span>Borrower: {{activeMessage.borrower.name}}</span></div>
             <h3>{{activeMessage.item}}</h3>
             <h4>{{activeMessage.description}}</h4>
           </div>
           <!-- terms stuff -->
           <div v-for="term in terms">
+            <li class="text-left ml-3 mb-1 OD" v-if="term.oldDescription"><i>{{term.oldDescription}}</i></li>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <input type="checkbox" @click="term.agreedUpon = false" aria-label="Checkbox for following text input"
-                    checked :disabled="!term.agreedUpon || !determineAccess()">
+                  <input type="checkbox" @click="term.agreedUpon = false, term.oldDescription = term.description"
+                    aria-label="Checkbox for following text input" checked
+                    :disabled="!term.agreedUpon || !determineAccess()">
                 </div>
               </div>
               <input type="text" class="form-control" v-model="term.description" aria-label="Text input with checkbox"
@@ -54,6 +58,7 @@
     props: [],
     data() {
       return {
+        // changedAgreement
       }
     },
     computed: {
@@ -69,7 +74,11 @@
     },
     methods: {
       renegotiate() {
-        this.$store.activeMessage.sent = !this.$store.activeMessage.sent
+        for (let i = 0; i < this.terms.length; i++) {
+          this.terms[i].agreedUpon = true
+        }
+        this.activeMessage.sent = !this.activeMessage.sent
+        this.$store.dispatch('editAgreement', this.activeMessage)
       },
       agree() {
         this.activeMessage.agreedUpon = true
@@ -100,3 +109,11 @@
     components: {}
   }
 </script>
+
+<style>
+  .OD {
+    opacity: .6;
+    color: red;
+    text-decoration: line-through;
+  }
+</style>

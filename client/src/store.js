@@ -163,6 +163,7 @@ export default new Vuex.Store({
         })
     },
     editAgreement({ commit, dispatch }, payload) {
+      debugger
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
           let blank = {}
