@@ -188,6 +188,11 @@ export default new Vuex.Store({
           dispatch('getMessages')
         })
     },
+
+    setActiveAg({ commit, dispatch }, payload) {
+      commit('setActiveAg', payload)
+    },
+
     //#endregion
     //#start MESSAGE
     setActiveMessage({ commit, dispatch }, payload) {
@@ -196,6 +201,7 @@ export default new Vuex.Store({
 
     //#endregion
     //payload for rate User needs to include the Id for the user being rated, a number for the score, and a session.uid
+    //payload: {profileId: , score:}
     rateUser({ commit, dispatch }, payload) {
       api.put('users/' + payload.profileId, payload)
         .then(res => {
