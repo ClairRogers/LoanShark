@@ -75,7 +75,7 @@ router.get('/active', (req, res, next) => {
       { agreedUpon: true },
       { closed: false }
     ]
-  })
+  }).populate('lender', 'name image _id').populate('borrower', 'name image _id')
     .then(ags => {
       res.send(ags)
     })

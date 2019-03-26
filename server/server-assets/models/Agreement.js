@@ -20,7 +20,7 @@ let schema = new Schema({
   //to get whole user object use populate mongoose method in agreement routes
   lender: { type: ObjectId, ref: 'User', required: true },
   borrower: { type: ObjectId, ref: 'User', required: true },
-  timeRemaining: { type: Number, default: 30 },
+  timeRemaining: { type: Number, default: 7 },
   agreedUpon: { type: Boolean, required: true, default: false },
   //if true, in borrower's box, if false in lender's box
   sent: { type: Boolean, required: true, default: true },

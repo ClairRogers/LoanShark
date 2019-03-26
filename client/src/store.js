@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
 
+
 Vue.use(Vuex)
 let base = window.location.host.includes('localhost:8080') ? '//localhost:3000/' : '/'
 
@@ -22,12 +23,11 @@ export default new Vuex.Store({
   state: {
     user: {},
     searchResults: [],
-    lends: [],
-    borrows: [],
     activeProfile: {},
     messages: [],
     activeAg: {},
-    activeMessage: {}
+    activeMessage: {},
+    activeDeals: []
   },
   mutations: {
     setUser(state, user) {
@@ -35,12 +35,6 @@ export default new Vuex.Store({
     },
     setSearchResults(state, data) {
       state.searchResults = data
-    },
-    setLends(state, data) {
-      state.lends = data
-    },
-    setBorrows(state, data) {
-      state.borrows = data
     },
     setActiveProfile(state, data) {
       state.activeProfile = data
@@ -53,6 +47,9 @@ export default new Vuex.Store({
     },
     setActiveMessage(state, data) {
       state.activeMessage = data
+    },
+    setActiveDeals(state, data) {
+      state.activeDeals = data
     }
   },
   actions: {
@@ -162,8 +159,15 @@ export default new Vuex.Store({
           commit('setMessages', res.data)
         })
     },
+
+    getActiveDeals({ commit, dispatch }) {
+      api.get('/agreements/active')
+        .then(res => {
+          commit('setActiveDeals', res.data)
+        })
+    },
+
     editAgreement({ commit, dispatch }, payload) {
-      debugger
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
           let blank = {}
@@ -172,7 +176,6 @@ export default new Vuex.Store({
     },
 
     acceptAgreement({ commit, dispatch }, payload) {
-
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
           commit('setActiveAg', res.data)
@@ -189,10 +192,16 @@ export default new Vuex.Store({
     //#start MESSAGE
     setActiveMessage({ commit, dispatch }, payload) {
       commit('setActiveMessage', payload)
-    }
+    },
 
     //#endregion
-
+    //payload for rate User needs to include the Id for the user being rated, a number for the score, and a session.uid
+    rateUser({ commit, dispatch }, payload) {
+      api.put('users/' + payload.profileId, payload)
+        .then(res => {
+          commit('setActiveProfile', res.data)
+        })
+    }
 
 
   }

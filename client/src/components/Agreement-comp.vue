@@ -46,17 +46,7 @@
                 <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
               <hr>
-              <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{newAgreement.timeRemaining + ' Days'}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 30">30 Days</a>
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 60">60 Days</a>
-                  <a class="dropdown-item" @click="activeAg.timeRemaining = 90">90 Days</a>
-                </div>
-              </div>
+              <input class="form-control" type="number" placeholder="Days" v-model="newAgreement.timeRemaining">
             </form>
 
 
@@ -119,6 +109,7 @@
         this.newAgreement.description = ''
         this.newAgreement.terms = []
         this.showDetails = false
+        delete this.newAgreement._id
       },
       addTerm() {
         let newTerm = JSON.parse(JSON.stringify(this.term))

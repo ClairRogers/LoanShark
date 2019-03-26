@@ -110,7 +110,7 @@ router.put('/:id', (req, res, next) => {
       })
   }
   else {
-    Users.findById(req.params.id).populate('friends', 'name image _id')
+    Users.findById(req.params.id)
       .then(user => {
         let found = user.score.find(s => s.provider == req.session.uid)
         if (found) {
@@ -130,7 +130,8 @@ router.put('/:id', (req, res, next) => {
             next()
             return
           }
-          user.hash = ''
+          // user.hash = ''
+          delete user._doc.hash
           res.send(user)
         })
           //make sure you remove hash on front end

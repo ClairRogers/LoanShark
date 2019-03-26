@@ -2,8 +2,8 @@
   <div class="messages container-fluid">
     <div class="row">
       <div class="col-12 col-md-8 offset-md-2">
-        <h3 class="my-3"><span class="mr-5 font pointer" :class="showMessages ? 'selected' : ''"
-            @click="showMessages = !showMessages">Pending
+        <h3 class="my-3 d-flex justify-content-around"><span class="font pointer"
+            :class="showMessages ? 'selected' : ''" @click="showMessages = !showMessages">Pending
             Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''"
             @click="showMessages = !showMessages">Pending
             Borrows</span></h3>
