@@ -92,6 +92,8 @@ router.delete('/:id', (req, res, next) => {
     .then(ag => {
       if (ag.agreedUpon == true && ag.authorId.toString() == req.session.uid.toString()) {
         ag.closed = true
+        ag.save()
+        res.send(ag)
       } else if (ag.lender.toString() == req.session.uid.toString() || ag.borrower.toString() == req.session.uid.toString()) {
         ag.remove(err => {
           if (err) {

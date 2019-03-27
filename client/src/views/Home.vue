@@ -14,7 +14,7 @@
             <h5>User Rating:</h5>
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
-                aria-valuemax="100">{{user.score}}%</div>
+                aria-valuemax="100">10%</div>
             </div>
           </div>
         </div>

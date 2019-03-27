@@ -13,7 +13,8 @@
           <h6>Item: {{borrow.item}}</h6>
           <p class="card-text">{{borrow.description}}</p>
           <hr>
-          <p class="text-center" :class="[isOverdue(borrow) ? 'text-danger' : '']"><i>Due Date: {{moment(borrow.updatedAt).add(borrow.timeRemaining,
+          <p class="text-center" :class="[isOverdue(borrow) ? 'text-danger' : 'text-black-50']"><i>Due
+              Date: {{moment(borrow.updatedAt).add(borrow.timeRemaining,
               'days').calendar()}}</i></p>
           <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewmodal">
             Launch demo modal
@@ -37,7 +38,7 @@
     },
     computed: {
       borrows() {
-        return this.$store.state.activeDeals.filter(m => m.borrower._id == this.user._id)
+        return this.$store.state.activeDeals.filter(m => m.borrower._id == this.user._id).filter(m => m.closed == false)
       },
     },
     methods: {
@@ -45,7 +46,9 @@
         this.$store.dispatch('setActiveAg', borrow)
       },
       isOverdue(borrow) {
-        return moment(borrow.updatedAt).add(borrow.timeRemaining).format('YYYYMMDD') < moment().format('YYYYMMDD')
+        let agDate = moment(borrow.updatedAt).add(borrow.timeRemaining, 'days').format('YYYYMMDD')
+        let now = moment().format('YYYYMMDD')
+        return agDate < now
       }
     },
     components: {

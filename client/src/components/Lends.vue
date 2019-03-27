@@ -13,7 +13,8 @@
           <h6>Item: {{lend.item}}</h6>
           <p class="card-text">{{lend.description}}</p>
           <hr>
-          <p class="text-center" :class="[isOverdue(lend) ? 'text-warning' : '']"><i>Due Date: {{moment(lend.updatedAt).add(lend.timeRemaining,
+          <p class="text-center" :class="[isOverdue(lend) ? 'text-danger' : 'text-black-50']"><i>Due
+              Date: {{moment(lend.updatedAt).add(lend.timeRemaining,
           'days').calendar()}}</i></p>
         </div>
       </div>
@@ -34,7 +35,7 @@
     },
     computed: {
       lends() {
-        return this.$store.state.activeDeals.filter(m => m.lender._id == this.user._id)
+        return this.$store.state.activeDeals.filter(m => m.lender._id == this.user._id).filter(m => m.closed == false)
       }
     },
     methods: {
@@ -42,7 +43,9 @@
         this.$store.dispatch('setActiveAg', lend)
       },
       isOverdue(lend) {
-        return moment(lend.updatedAt).add(lend.timeRemaining).format('YYYYMMDD') < moment().format('YYYYMMDD')
+        let agDate = moment(lend.updatedAt).add(lend.timeRemaining, 'days').format('YYYYMMDD')
+        let now = moment().format('YYYYMMDD')
+        return agDate < now
       }
     },
     components: {
