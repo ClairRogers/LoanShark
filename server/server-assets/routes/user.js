@@ -110,7 +110,7 @@ router.put('/:id', (req, res, next) => {
       })
   }
   else {
-    Users.findById(req.params.id)
+    Users.findById(req.body._id)
       .then(user => {
         let found = user.score.find(s => s.provider == req.session.uid)
         if (found) {
@@ -134,12 +134,12 @@ router.put('/:id', (req, res, next) => {
           delete user._doc.hash
           res.send(user)
         })
-          //make sure you remove hash on front end
+        //make sure you remove hash on front end
 
-          .catch(err => {
-            console.log(err)
-            next()
-          })
+      })
+      .catch(err => {
+        console.log(err)
+        next()
       })
   }
 })

@@ -23,7 +23,9 @@
                 {{activeAg.borrower.name}}</span></div>
             <h5>Item: {{activeAg.item}}</h5>
             <p>{{activeAg.description}}</p>
-            <li v-for="term in activeAg.terms">Term: {{term.description}}</li>
+            <hr>
+            <h5 v-if="activeAg.terms.length > 0">Terms:</h5>
+            <li v-for="term in activeAg.terms">{{term.description}}</li>
           </div>
           <div class="modal-footer">
             <button v-if="activeAg.authorId == user._id" type="button" class="btn btn-info"
@@ -54,6 +56,15 @@
       }
     },
     methods: {
+      sendRating(rating) {
+        if (rating) {
+          console.log(rating)
+          debugger
+          this.$store.dispatch('thisIsANewName', { score: rating, _id: this.activeAg.borrower._id })
+          // this.$store.dispatch('closeAg', this.activeAg)
+          Swal.fire({ text: 'Thanks for rating! Your contract is now complete.' })
+        }
+      },
       async closeContract() {
         const inputOptions = new Promise((resolve) => {
           setTimeout(() => {
@@ -61,15 +72,16 @@
               '1': 'Terrible',
               '2': 'Okay',
               '3': 'Good',
-              '4': 'Very Good',
+              '4': 'Great',
               '5': 'Excellent',
             })
           }, 1000)
         })
         const { value: rating } = await Swal.fire({
-          title: 'Rate user',
-          text: 'Please leave a rating:',
+          title: 'Rate User',
+          text: 'Please rate your overall experience with this user:',
           input: 'radio',
+          showCancelButton: true,
           inputOptions: inputOptions,
           inputValidator: (value) => {
             if (!value) {
@@ -77,18 +89,7 @@
             }
           }
         })
-        if (rating) {
-          Swal.fire({ text: 'Thanks for rating!' })
-        }
-
-        // Swal.fire({
-        //   onOpen: () => {
-        //     console.log('it werks!')
-        //     let componentClass = Vue.extend(starRating)
-        //     let instance = new componentClass()
-        //     instance.$mount();
-        //     document.getElementById('swalHtml').appendChild(instance.$el)
-        //   },
+        this.sendRating(rating)
 
       }
     },

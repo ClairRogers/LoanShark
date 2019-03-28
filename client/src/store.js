@@ -120,11 +120,11 @@ export default new Vuex.Store({
       commit('setActiveProfile', payload)
       router.push({ name: 'profile', params: { profileId: payload._id } })
     },
+
     deleteUser({ commit, dispatch }, payload) {
       api.delete('users/' + payload)
         .then(res => {
           console.log('successssssssssss')
-
         })
 
     },
@@ -132,6 +132,16 @@ export default new Vuex.Store({
       api.put('users/' + payload._id, payload)
         .then(res => {
           commit('setUser', res.data)
+        })
+    },
+
+    thisIsANewName({ commit, dispatch }, payload) {
+      debugger
+      console.log('yu hit rateUser action')
+      api.put('users/' + payload._id, payload)
+        .then(res => {
+          debugger
+          console.log(res.data)
         })
     },
 
@@ -192,7 +202,6 @@ export default new Vuex.Store({
     closeAg({ commit, dispatch }, payload) {
       api.delete('/agreements/' + payload._id)
         .then(res => {
-          console.log(res.data)
           commit('setActiveAg', res.data)
           dispatch('getActiveDeals')
         })
