@@ -13,8 +13,7 @@
           <h6>Item: {{borrow.item}}</h6>
           <p class="card-text">{{borrow.description}}</p>
           <hr>
-          <p class="text-center" :class="[isOverdue(borrow) ? 'text-danger' : 'text-black-50']"><i>Due
-              Date: {{moment(borrow.updatedAt).add(borrow.timeRemaining,
+          <p class="text-center" :class="[isOverdue(borrow) ? 'text-danger' : 'text-black-50']"><i>Due: {{moment(borrow.updatedAt).add(borrow.timeRemaining,
               'days').calendar()}}</i></p>
           <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewmodal">
             Launch demo modal

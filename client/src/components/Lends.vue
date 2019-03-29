@@ -13,8 +13,7 @@
           <h6>Item: {{lend.item}}</h6>
           <p class="card-text">{{lend.description}}</p>
           <hr>
-          <p class="text-center" :class="[isOverdue(lend) ? 'text-danger' : 'text-black-50']"><i>Due
-              Date: {{moment(lend.updatedAt).add(lend.timeRemaining,
+          <p class="text-center" :class="[isOverdue(lend) ? 'text-danger' : 'text-black-50']"><i>Due: {{moment(lend.updatedAt).add(lend.timeRemaining,
           'days').calendar()}}</i></p>
         </div>
       </div>

@@ -59,10 +59,10 @@
       sendRating(rating) {
         if (rating) {
           console.log(rating)
-          debugger
           this.$store.dispatch('thisIsANewName', { score: rating, _id: this.activeAg.borrower._id })
-          // this.$store.dispatch('closeAg', this.activeAg)
+          this.$store.dispatch('closeAg', this.activeAg)
           Swal.fire({ text: 'Thanks for rating! Your contract is now complete.' })
+
         }
       },
       async closeContract() {

@@ -13,24 +13,17 @@
           </div>
 
 
-          <div class="modal-body">
+          <div class="modal-body text-left">
             <form @submit.prevent="initiateAgreement">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Title and Item</span>
-                </div>
-                <input type="text" v-model="newAgreement.title" required class="form-control"
-                  :disabled="activeAg.initiated">
-                <input type="text" v-model="newAgreement.item" required class="form-control"
-                  :disabled="activeAg.initiated">
-              </div>
-              <div class="input-group input-group-lg my-5">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-lg">Description</span>
-                </div>
-                <input v-model="newAgreement.description" required type="text" class="form-control" aria-label="Large"
-                  aria-describedby="inputGroup-sizing-sm" :disabled="activeAg.initiated">
-              </div>
+              <h6>Title:</h6>
+              <input type="text" v-model="newAgreement.title" required class="form-control mb-3"
+                :disabled="activeAg.initiated">
+              <h6>Item:</h6>
+              <input type="text" v-model="newAgreement.item" required class="form-control mb-3"
+                :disabled="activeAg.initiated">
+              <h6>Description:</h6>
+              <input v-model="newAgreement.description" required type="text" class="form-control mb-4"
+                aria-label="Large" aria-describedby="inputGroup-sizing-sm" :disabled="activeAg.initiated">
               <button type="submit" class="btn btn-info" v-if="!activeAg.initiated">Start
                 Agreement</button>
             </form>
@@ -46,7 +39,13 @@
                 <button class="btn btn-info" @click="addTerm">Commit Term</button>
               </div>
               <hr>
-              <input class="form-control" type="number" placeholder="Days" v-model="newAgreement.timeRemaining">
+              <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">Number of Days</div>
+                </div>
+                <input class="form-control" type="number" placeholder="Days" v-model="newAgreement.timeRemaining">
+              </div>
+              <!-- <input class="form-control" type="number" placeholder="Days" v-model="newAgreement.timeRemaining"> -->
             </form>
 
 
@@ -54,7 +53,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" @click="editAgreement" class="btn btn-info">Make Agreement</button>
+            <button type="button" @click="editAgreement" class="btn btn-info" data-dismiss="modal">Update
+              Agreement</button>
           </div>
         </div>
       </div>
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+  import Swal from 'sweetalert2'
   export default {
     name: "agreement",
     props: ["profileId", "user"],
@@ -110,6 +111,11 @@
         this.newAgreement.terms = []
         this.showDetails = false
         delete this.newAgreement._id
+        Swal.fire(
+          'Agreement Sent!',
+          'Now awaiting their reply.',
+          'success'
+        )
       },
       addTerm() {
         let newTerm = JSON.parse(JSON.stringify(this.term))

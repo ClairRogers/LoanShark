@@ -71,7 +71,7 @@ router.get('/search/:input', (req, res, next) => {
 //Get by ID for "view profile" on click; on click sends ID, finds user with that id. can be used to set "active profile"
 //or something like that when looking at other people's profiles.
 router.get('/:id', (req, res, next) => {
-  Users.findById(req.params.id).populate('friends', 'name image _id')
+  Users.findById(req.params.id).populate('friends', 'name image _id score')
     .then(user => {
       res.send(user)
     })
@@ -99,7 +99,7 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
 
   if (req.params.id.toString() == req.session.uid.toString()) {
-    Users.findOneAndUpdate({ _id: req.session.uid }, req.body, { new: true }).populate('friends', 'name image _id')
+    Users.findOneAndUpdate({ _id: req.session.uid }, req.body, { new: true }).populate('friends', 'name image _id score')
       .then(user => {
         delete user._doc.hash
         res.send(user)
@@ -189,7 +189,7 @@ router.delete('/:id', (req, res, next) => {
 
 // remove friend from contact list
 router.put('/:id/remove', (req, res, next) => {
-  Users.findById(req.session.uid).populate('friends', 'name image _id')
+  Users.findById(req.session.uid).populate('friends', 'name image _id score')
     .then(user => {
 
       for (let i = 0; i < user.friends.length; i++) {

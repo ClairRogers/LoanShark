@@ -15,11 +15,11 @@
           <div class="card-body">
             <h5 class="card-title">For: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
-            <button type="button" class="btn btn-sm btn-info" @click="setActiveMessage(message)" data-toggle="modal"
-              data-target="#contractModal">View
+            <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)"
+              data-toggle="modal" data-target="#contractModal">View
               Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
-            <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply</h5>
+            <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
           </div>
           <div class="card-footer text-muted d-flex justify-content-around">
@@ -35,14 +35,15 @@
           <div class="card-body">
             <h5 class="card-title">For: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
-            <button @click="setActiveMessage(message)" class="btn btn-sm btn-info" data-toggle="modal"
+            <button @click="setActiveMessage(message)" class="btn btn-sm btn-info mr-1" data-toggle="modal"
               data-target="#contractModal">View Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
-            <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply</h5>
+            <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
           </div>
-          <div class="card-footer text-muted">
-            From: {{message.lender.name}}
+          <div class="card-footer text-muted d-flex justify-content-around">
+            <p>To: {{message.borrower.name}}</p>
+            <p>From: {{message.lender.name}}</p>
           </div>
         </div>
       </div>
@@ -54,6 +55,7 @@
 
 <script>
   import Contract from '@/components/Contract-comp.vue'
+  import Swal from 'sweetalert2'
   export default {
     name: "messages",
     mounted() {
@@ -80,7 +82,24 @@
     },
     methods: {
       deleteAg(message) {
-        this.$store.dispatch('deleteAg', message)
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "This cancels your contract. You won't be able to undo this action!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#138496',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Your contract has been terminated.',
+              'success'
+            )
+            this.$store.dispatch('deleteAg', message)
+          }
+        })
       },
       setActiveMessage(message) {
         this.$store.dispatch('setActiveMessage', message)

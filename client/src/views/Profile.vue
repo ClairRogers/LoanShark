@@ -12,8 +12,8 @@
                 class="fab fa-paypal fa-xs ml-1 faded"></i></h2>
             <h5>User Rating:</h5>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0"
-                aria-valuemax="100">{{activeProfile.score}}%</div>
+              <div class="progress-bar" role="progressbar" v-bind:style="{ width: barWidth + '%' }" aria-valuenow="25"
+                aria-valuemin="0" aria-valuemax="100">{{score}}%</div>
             </div>
           </div>
         </div>
@@ -42,7 +42,9 @@
     name: "Profile",
     props: ["profileId"],
     data() {
-      return {}
+      return {
+        barWidth: 0
+      }
     },
     computed: {
       activeProfile() {
@@ -50,6 +52,19 @@
       },
       user() {
         return this.$store.state.user
+      },
+      score() {
+        if (this.$store.state.activeProfile.score) {
+          let scoreArr = this.$store.state.activeProfile.score
+          let total = 0
+          let out = 0
+          for (let i = 0; i < scoreArr.length; i++) {
+            total += scoreArr[i].rating
+            out = (total / scoreArr.length) * 20
+          }
+          this.barWidth = out.toFixed()
+          return out.toFixed()
+        }
       }
     },
     methods: {

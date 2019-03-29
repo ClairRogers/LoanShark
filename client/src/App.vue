@@ -11,17 +11,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" @click="goHome">Home</a>
+            <a class="nav-link" @click="goHome" data-toggle="collapse" data-target="#navbarSupportedContent">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="goContacts">My Contacts</a>
+            <a class="nav-link" @click="goContacts" data-toggle="collapse" data-target="#navbarSupportedContent">My
+              Contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="goMessages">Messages
+            <a class="nav-link" @click="goMessages" data-toggle="collapse"
+              data-target="#navbarSupportedContent">Messages
               <span>{{unreadMessages()}}</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="logOut">Logout</a>
+            <a class="nav-link" @click="logOut" data-toggle="collapse" data-target="#navbarSupportedContent">Logout</a>
           </li>
         </ul>
         <i class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"></i>

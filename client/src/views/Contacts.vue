@@ -1,13 +1,27 @@
 <template>
-  <div class="contacts ">
-    <div class="my-2" v-for="friend in friends">
-      <span class="d-flex justify-content-center"><span @click="setActiveProfile(friend)" class="pointer"><img
-            :src="friend.image" class="sm-img mr-3"> <b>{{friend.name}}</b>
-          <span class="ml-3">{{friend.email}}
-          </span>
-        </span>
-        <button class="btn btn-danger btn-sm" @click="removeFriend(friend._id)">Remove Contact</button>
-      </span>
+  <div class="contacts container-fluid">
+    <h2 class="text-center logo mt-4">Contacts</h2>
+    <div class="row">
+      <div class="col-12 col-md-6 offset-md-3">
+        <div class="row mt-4">
+          <div v-for="friend in friends" class="col-6">
+            <div class="card mb-3 pointer" @click="setActiveProfile(friend)" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img :src="friend.image" width="150px" class="card-img img-fluid" style="border-radius: 50%">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{friend.name}}</h5>
+                    <p>{{friend.email}}</p>
+                    <button class="btn btn-danger btn-sm" @click="removeFriend(friend._id)">Remove Contact</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

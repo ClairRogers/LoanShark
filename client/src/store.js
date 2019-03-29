@@ -136,11 +136,9 @@ export default new Vuex.Store({
     },
 
     thisIsANewName({ commit, dispatch }, payload) {
-      debugger
       console.log('yu hit rateUser action')
       api.put('users/' + payload._id, payload)
         .then(res => {
-          debugger
           console.log(res.data)
         })
     },
