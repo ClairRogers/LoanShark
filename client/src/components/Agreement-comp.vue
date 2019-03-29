@@ -28,7 +28,7 @@
                 Agreement</button>
             </form>
 
-            <ol class="text-left">
+            <ol class="text-left mt-4">
               <li v-for="term in newAgreement.terms">{{term.description}}</li>
             </ol>
 
@@ -111,6 +111,7 @@
         this.newAgreement.terms = []
         this.showDetails = false
         delete this.newAgreement._id
+        this.$store.dispatch('setActiveAg', {})
         Swal.fire(
           'Agreement Sent!',
           'Now awaiting their reply.',

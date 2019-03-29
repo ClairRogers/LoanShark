@@ -37,7 +37,7 @@
 
           <div class="modal-footer">
 
-            <button class="btn btn-success btn-sm" @click="agree" :disabled="!determineAccess()"
+            <button class="btn btn-success btn-sm" @click="agree" :disabled="!determineAccess() || editedTerm()"
               data-dismiss="modal">Agree to Terms</button>
             <button class="btn btn-info btn-sm" @click="renegotiate" :disabled="!determineAccess() || !editedTerm()"
               data-dismiss="modal">Renegotiate</button>
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+  import Swal from 'sweetalert2'
   export default {
     name: "contract",
     props: [],
@@ -79,6 +80,11 @@
         }
         this.activeMessage.sent = !this.activeMessage.sent
         this.$store.dispatch('editAgreement', this.activeMessage)
+        Swal.fire(
+          'Contract Sent!',
+          'Now awaiting their reply.',
+          'success'
+        )
       },
       agree() {
         this.activeMessage.agreedUpon = true
