@@ -6,8 +6,7 @@
     </button> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="viewmodal" tabindex="-1" role="dialog" aria-labelledby="viewmodalTitle"
-      aria-hidden="true">
+    <div class="modal fade" id="viewmodal" tabindex="-1" role="dialog" aria-labelledby="viewmodalTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -28,7 +27,7 @@
             <li v-for="term in activeAg.terms">{{term.description}}</li>
           </div>
           <div class="modal-footer">
-            <button v-if="activeAg.authorId == user._id" type="button" class="btn btn-info"
+            <button v-if="activeAg.authorId == user._id && activeAg.closed == false" type="button" class="btn btn-info"
               @click="closeContract()">Mark
               Contract as Finished</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -46,7 +45,6 @@
     props: [],
     data() {
       return {
-        closeModal: false
       }
     },
     computed: {
@@ -64,8 +62,6 @@
           this.$store.dispatch('thisIsANewName', { score: rating, _id: this.activeAg.borrower._id })
           this.$store.dispatch('closeAg', this.activeAg)
           Swal.fire({ text: 'Thanks for rating! Your contract is now complete.' })
-          this.closeModal = true
-          this.closeModal = false
         }
       },
       async closeContract() {
