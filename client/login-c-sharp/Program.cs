@@ -1,12 +1,15 @@
 ﻿using System;
+using login_c_sharp.Models;
 
 namespace login_c_sharp
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+      App app = new App();
+      app.Run();
+
     }
+  }
 }
