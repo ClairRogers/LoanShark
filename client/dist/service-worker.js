@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/LoanShark/precache-manifest.a82d3147e1995639c34cebbccba4055f.js"
+  "/precache-manifest.46358437e0797e66f43cc74d2aefdeb1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "client"});
