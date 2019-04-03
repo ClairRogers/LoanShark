@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/LoanShark/',
+  publicPath: '/',
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,
