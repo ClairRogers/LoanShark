@@ -3,11 +3,8 @@ let bp = require('body-parser')
 var server = express()
 var cors = require('cors')
 var port = process.env.PORT || 3000
+
 server.use(express.static(__dirname + '/../client/dist'))
-
-
-//add static files
-
 
 var whitelist = ['http://localhost:8080', 'https://theloanshark.herokuapp.com/']
 var corsOptions = {
