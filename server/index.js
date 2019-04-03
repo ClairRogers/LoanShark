@@ -9,7 +9,7 @@ server.use(express.static(__dirname + '/../client/dist'))
 //add static files
 
 
-var whitelist = ['http://localhost:8080']
+var whitelist = ['http://localhost:8080', 'https://theloanshark.herokuapp.com/']
 var corsOptions = {
   origin: function (origin, callback) {
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
