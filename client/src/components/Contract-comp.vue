@@ -16,6 +16,7 @@
               <span>Borrower: {{activeMessage.borrower.name}}</span></div>
             <h3>{{activeMessage.item}}</h3>
             <h4>{{activeMessage.description}}</h4>
+            <h6>Duration of contract: {{activeMessage.timeRemaining}}</h6>
           </div>
           <!-- terms stuff -->
           <div v-for="term in terms">

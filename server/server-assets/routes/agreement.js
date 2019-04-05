@@ -85,6 +85,23 @@ router.get('/active', (req, res, next) => {
     })
 })
 
+router.get('/closed', (req, res, next) => {
+  let userAgs = Ags.find({
+    $or: [
+      { lender: req.session.uid },
+      { borrower: req.session.uid }
+    ]
+  })
+  userAgs.find({ closed: true }).populate('lender', 'name image _id').populate('borrower', 'name image _id')
+    .then(ags => {
+      res.send(ags)
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
+
 
 //delete/archive a contract
 router.delete('/:id', (req, res, next) => {

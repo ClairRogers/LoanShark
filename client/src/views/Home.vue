@@ -22,13 +22,21 @@
           <div class="col-12">
             <p class="mt-3 mx-3 text-justify">{{user.bio}}</p>
             <hr>
-            <h4 class="text-center d-flex justify-content-around"><span class="pointer font"
+            <button v-if="showCurrent" class="btn btn-info" @click="showCurrent = !showCurrent">View Active
+              Contracts</button>
+            <button v-else class="btn btn-info mb-3" @click="showCurrent = !showCurrent">View Completed
+              Contracts</button>
+            <h4 v-if="!showCurrent" class="text-center d-flex justify-content-around"><span class="pointer font"
                 :class="showContracts ? 'selected' : ''" @click="showContracts = !showContracts">My Lends</span> <span
                 class="pointer font" :class="!showContracts ? 'selected' : ''"
                 @click="showContracts = !showContracts">My
                 Borrows</span></h4>
-            <lends v-if="showContracts" :user="user"></lends>
-            <borrows v-if="!showContracts" :user="user"></borrows>
+            <div v-if="!showCurrent">
+              <lends v-if="showContracts" :user="user"></lends>
+              <borrows v-if="!showContracts" :user="user"></borrows>
+            </div>
+            <completed v-else :user="user"></completed>
+
           </div>
         </div>
       </div>
@@ -36,10 +44,10 @@
       <button class="trigger"></button> -->
     </div>
     <editmodal></editmodal>
-    <form @submit.prevent="die">
+    <!-- <form @submit.prevent="die">
       <input type="text" v-model="userId">
       <button type="submit">delete everyone jamie</button>
-    </form>
+    </form> -->
   </div>
 </template>
 
@@ -48,12 +56,14 @@
   import Lends from '@/components/Lends.vue'
   import Borrows from '@/components/Borrows.vue'
   import Editmodal from '@/components/Edit-modal.vue'
+  import Completed from '@/components/Completed-contracts.vue'
 
 
   export default {
     name: 'home',
     mounted() {
       this.$store.dispatch('getActiveDeals')
+      this.$store.dispatch('getCompletedDeals')
     },
     created() {
 
@@ -71,13 +81,15 @@
         // barWidth: this.user.score + '%'
         userId: '',
         showContracts: true,
-        barWidth: 0
+        barWidth: 0,
+        showCurrent: false,
       }
     },
     components: {
       Lends,
       Borrows,
-      Editmodal
+      Editmodal,
+      Completed
     },
     methods: {
       logout() {

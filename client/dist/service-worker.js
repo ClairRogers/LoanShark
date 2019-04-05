@@ -13,11 +13,12 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
+
 importScripts(
   "/precache-manifest.46358437e0797e66f43cc74d2aefdeb1.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "client"});
+workbox.core.setCacheNameDetails({ prefix: "client" });
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

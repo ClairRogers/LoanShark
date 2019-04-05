@@ -26,7 +26,8 @@ export default new Vuex.Store({
     messages: [],
     activeAg: {},
     activeMessage: {},
-    activeDeals: []
+    activeDeals: [],
+    completedDeals: [],
   },
   mutations: {
     setUser(state, user) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     setActiveDeals(state, data) {
       state.activeDeals = data
+    },
+    setCompletedDeals(state, data) {
+      state.completedDeals = data
     }
   },
   actions: {
@@ -135,7 +139,6 @@ export default new Vuex.Store({
     },
 
     thisIsANewName({ commit, dispatch }, payload) {
-      console.log('yu hit rateUser action')
       api.put('users/' + payload._id, payload)
         .then(res => {
           console.log(res.data)
@@ -174,6 +177,13 @@ export default new Vuex.Store({
         })
     },
 
+    getCompletedDeals({ commit, dispatch }) {
+      api.get('/agreements/closed')
+        .then(res => {
+          commit('setCompletedDeals', res.data)
+        })
+    },
+
     editAgreement({ commit, dispatch }, payload) {
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
@@ -186,6 +196,7 @@ export default new Vuex.Store({
       api.put('/agreements/' + payload._id, payload)
         .then(res => {
           commit('setActiveAg', res.data)
+          dispatch('getMessages')
         })
     },
 
@@ -201,6 +212,7 @@ export default new Vuex.Store({
         .then(res => {
           commit('setActiveAg', res.data)
           dispatch('getActiveDeals')
+          dispatch('getCompletedDeals')
         })
     },
 

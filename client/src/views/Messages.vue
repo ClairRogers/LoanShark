@@ -10,10 +10,10 @@
 
         <div v-if="showMessages" v-for="message in lendMessages" class="card text-center my-2">
           <div class="card-header">
-            <h3>{{message.title}}</h3>
+            <h3>{{message.borrower.name}}</h3>
           </div>
           <div class="card-body">
-            <h5 class="card-title">For: {{message.item}}</h5>
+            <h5 class="card-title">Item: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
             <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)"
               data-toggle="modal" data-target="#contractModal">View
@@ -21,9 +21,9 @@
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
-          </div>
+          </div>8080
           <div class="card-footer text-muted d-flex justify-content-around">
-            <p>To: {{message.borrower.name}}</p>
+            <p>Lent To: {{message.borrower.name}}</p>
             <p>From: {{message.lender.name}}</p>
           </div>
         </div>
