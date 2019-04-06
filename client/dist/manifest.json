@@ -1,8 +1,8 @@
 {
-  "name": "client",
-  "short_name": "client",
-  "favicon16": "loanShark-16x16.png",
-  "favicon32": "loanShark-32x32.png",
+  "name": "LoanShark",
+  "short_name": "LoanShark",
+  "favicon16": "LoanShark-16x16.png",
+  "favicon32": "LoanShark-32x32.png",
   "icons": [
     {
       "src": "./img/icons/LoanShark-logo.png",
@@ -16,7 +16,7 @@
     }
   ],
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#4DBA87",
   "theme_color": "#4DBA87"
 }

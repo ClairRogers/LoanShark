@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "/js/about.d288b4f1.js"
   },
   {
-    "revision": "4605591f90dce943e857",
-    "url": "/css/app.33082f4e.css"
+    "revision": "ff562488fb31e293aaf7",
+    "url": "/css/app.7f11e0b7.css"
   },
   {
-    "revision": "4605591f90dce943e857",
-    "url": "/js/app.8e397341.js"
+    "revision": "ff562488fb31e293aaf7",
+    "url": "/js/app.c1c65f29.js"
   },
   {
     "revision": "d4b051b68a4d2218be0e",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/img/LoanShark-white.405e963d.png"
   },
   {
-    "revision": "c38a11cdbccf6715cd1aa384329a9070",
+    "revision": "cbced746aeff7bdf68dcc8b393ba0e96",
     "url": "/index.html"
   },
   {
