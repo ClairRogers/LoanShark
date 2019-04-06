@@ -21,7 +21,7 @@
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
-          </div>8080
+          </div>
           <div class="card-footer text-muted d-flex justify-content-around">
             <p>Lent To: {{message.borrower.name}}</p>
             <p>From: {{message.lender.name}}</p>
