@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/img/LoanShark-white.405e963d.png"
   },
   {
-    "revision": "cbced746aeff7bdf68dcc8b393ba0e96",
+    "revision": "4a548c31f529c0fedadb96294ea8d93c",
     "url": "/index.html"
   },
   {
