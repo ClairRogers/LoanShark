@@ -27,9 +27,9 @@
             <li v-for="term in activeAg.terms">{{term.description}}</li>
           </div>
           <div class="modal-footer">
-            <button v-if="activeAg.authorId == user._id && activeAg.closed == false" type="button" class="btn btn-info"
+            <span><button v-if="activeAg.authorId == user._id && activeAg.closed == false" type="button" class="btn btn-info"
               @click="closeContract()">Mark
-              Contract as Finished</button>
+              Contract as Finished</button></span>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>

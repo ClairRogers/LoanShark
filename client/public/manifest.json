@@ -1,6 +1,8 @@
 {
   "name": "client",
   "short_name": "client",
+  "favicon16": "loanShark-16x16.png",
+  "favicon32": "loanShark-32x32.png",
   "icons": [
     {
       "src": "./img/icons/LoanShark-logo.png",
