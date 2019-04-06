@@ -2,10 +2,9 @@
   <div class="messages container-fluid">
     <div class="row">
       <div class="col-12 col-md-8 offset-md-2">
-        <h3 class="my-3 d-flex justify-content-around"><span class="font pointer"
-            :class="showMessages ? 'selected' : ''" @click="showMessages = !showMessages">Pending
-            Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''"
+        <h3 class="my-3 d-flex justify-content-around"><span class="font pointer" :class="showMessages ? 'selected' : ''"
             @click="showMessages = !showMessages">Pending
+            Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''" @click="showMessages = !showMessages">Pending
             Borrows</span></h3>
 
         <div v-if="showMessages" v-for="message in lendMessages" class="card text-center my-2">
@@ -15,13 +14,13 @@
           <div class="card-body">
             <h5 class="card-title">Item: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
-            <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)"
-              data-toggle="modal" data-target="#contractModal">View
+            <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)" data-toggle="modal"
+              data-target="#contractModal">View
               Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
-          </div>8080
+          </div>
           <div class="card-footer text-muted d-flex justify-content-around">
             <p>Lent To: {{message.borrower.name}}</p>
             <p>From: {{message.lender.name}}</p>
@@ -35,8 +34,8 @@
           <div class="card-body">
             <h5 class="card-title">For: {{message.item}}</h5>
             <p class="card-text">{{message.description}}</p>
-            <button @click="setActiveMessage(message)" class="btn btn-sm btn-info mr-1" data-toggle="modal"
-              data-target="#contractModal">View Contract</button>
+            <button @click="setActiveMessage(message)" class="btn btn-sm btn-info mr-1" data-toggle="modal" data-target="#contractModal">View
+              Contract</button>
             <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
             <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply...</h5>
             <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
