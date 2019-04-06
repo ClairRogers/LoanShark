@@ -148,7 +148,7 @@
   }
 
   .bgc {
-    background-color: #13abc4;
+    background-image: linear-gradient(#13abc4, #0e92a7);
   }
 
   .navbar {

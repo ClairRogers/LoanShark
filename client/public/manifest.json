@@ -3,12 +3,12 @@
   "short_name": "client",
   "icons": [
     {
-      "src": "../src/assets/LoanShark-white.png",
+      "src": "./img/icons/LoanShark-logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "../src/assets/LoanShark-white.png",
+      "src": "./img/icons/LoanShark-logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

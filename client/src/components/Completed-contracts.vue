@@ -1,6 +1,6 @@
 <template>
   <div class="CompletedContracts row d-flex justify-content-center">
-    <h4 class="font mt-3">Completed Contracts</h4>
+    <h4 class="font selected mt-3">Completed Contracts</h4>
     <div v-if="completedAgs.length < 1">
       <p>You have no completed contracts</p>
     </div>
@@ -21,7 +21,7 @@
               <p class="card-text">{{ag.description}}</p>
             </div>
             <div class="d-flex flex-column justify-content-center">
-              <button class="btn btn-danger" @click="rateLender(ag)" data-dismiss="modal">Rate Lender</button>
+              <button class="btn btn-danger" @click.stop="rateLender(ag)" data-dismiss="modal">Rate Lender</button>
             </div>
           </div>
           <hr>
@@ -74,6 +74,7 @@
           inputValidator: (value) => {
             if (!value) {
               return 'You need to choose something!'
+
             } else {
               this.$store.dispatch('thisIsANewName', { score: value, _id: ag.lender._id })
               Swal.fire({ text: 'Thanks for rating!' })
