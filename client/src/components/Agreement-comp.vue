@@ -36,7 +36,7 @@
               <div v-if="showDetails" class="input-group my-5">
                 <input v-model="term.description" type="text" class="form-control">
                 <br>
-                <button class="btn btn-info" @click="addTerm">Commit Term</button>
+                <button class="btn btn-info" @click.prevent="addTerm">Commit Term</button>
               </div>
               <hr>
               <div class="input-group mb-2 mr-sm-2">
