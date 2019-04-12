@@ -14,7 +14,7 @@
                   <div class="card-body">
                     <h5 class="card-title">{{friend.name}}</h5>
                     <p>{{friend.email}}</p>
-                    <button class="btn btn-danger btn-sm" @click="removeFriend(friend._id)">Remove Contact</button>
+                    <button class="btn btn-danger btn-sm" @click.stop="removeFriend(friend._id)">Remove Contact</button>
                   </div>
                 </div>
               </div>

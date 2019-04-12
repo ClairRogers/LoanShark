@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div v-if="!showMessages">
+          <div v-else>
             <div v-for="message in borrowMessages" class="card text-center my-2">
               <div class="card-header">
                 <h3>{{message.title}}</h3>
