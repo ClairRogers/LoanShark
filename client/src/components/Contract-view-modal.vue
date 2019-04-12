@@ -6,7 +6,8 @@
     </button> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="viewmodal" tabindex="-1" role="dialog" aria-labelledby="viewmodalTitle" aria-hidden="true">
+    <div class="modal fade" id="viewmodal" tabindex="-1" role="dialog" aria-labelledby="viewmodalTitle"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -27,9 +28,9 @@
             <li v-for="term in activeAg.terms">{{term.description}}</li>
           </div>
           <div class="modal-footer">
-            <span><button v-if="activeAg.authorId == user._id && activeAg.closed == false" type="button" class="btn btn-info"
-              @click="closeContract()">Mark
-              Contract as Finished</button></span>
+            <span><button v-if="activeAg.authorId == user._id && activeAg.closed == false" type="button"
+                class="btn btn-info" @click="closeContract()">Mark
+                Contract as Finished</button></span>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -59,7 +60,7 @@
       sendRating(rating) {
         if (rating) {
           console.log(rating)
-          this.$store.dispatch('thisIsANewName', { score: rating, _id: this.activeAg.borrower._id })
+          this.$store.dispatch('updateRating', { score: rating, _id: this.activeAg.borrower._id })
           this.$store.dispatch('closeAg', this.activeAg)
           Swal.fire({ text: 'Thanks for rating! Your contract is now complete.' })
         }
@@ -68,17 +69,17 @@
         const inputOptions = new Promise((resolve) => {
           setTimeout(() => {
             resolve({
-              '1': 'Terrible',
-              '2': 'Okay',
-              '3': 'Good',
-              '4': 'Great',
-              '5': 'Excellent',
+              '1': '1',
+              '2': '2',
+              '3': '3',
+              '4': '4',
+              '5': '5',
             })
           }, 1000)
         })
         const { value: rating } = await Swal.fire({
           title: 'Rate User',
-          text: 'Please rate your overall experience with this user:',
+          text: 'Please rate your overall experience with this user (1 being terrible and 5 being excellent):',
           input: 'radio',
           showCancelButton: true,
           inputOptions: inputOptions,

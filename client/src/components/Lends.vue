@@ -1,7 +1,7 @@
 <template>
   <div class="Lends row">
-    <div v-if="lends.length < 1">
-      <p>You have no active lends</p>
+    <div v-if="lends.length < 1" class="col text-center">
+      <p class="mt-3">You have no active lends</p>
     </div>
     <div v-else class="col-12">
       <div v-for="lend in lends" data-toggle="modal" data-target="#viewmodal" class="card pointer my-3"

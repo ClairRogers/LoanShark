@@ -1,16 +1,16 @@
 <template>
   <div class="search">
     <div class="row">
-      <div v-for="result in results" v-if="result._id != user._id" class="col-12 mt-3">
-        <span class="d-flex justify-content-between" data-dismiss="modal"><span @click="setActiveProfile(result)"
-            class="pointer"><img :src="result.image" class="sm-img mr-3"> <b>{{result.name}}</b>
-            <span class="ml-3">{{result.email}}
-            </span>
+      <div v-for="result in results" v-if="result._id != user._id" class="col-12">
+        <span class="d-flex justify-content-between text-left" data-dismiss="modal">
+          <span @click="setActiveProfile(result)" class="pointer">
+            <img :src="result.image" class="sm-img mr-3"> <b>{{result.name}}</b>
           </span>
           <button v-if="!determineFriendship(result)" class="btn btn-sm btn-info" @click="addFriend(result, user)">Add
             Contact</button>
           <i class="far fa-check-square" v-else></i>
         </span>
+        <hr>
       </div>
     </div>
   </div>

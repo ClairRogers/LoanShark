@@ -1,8 +1,8 @@
 {
   "name": "LoanShark",
   "short_name": "LoanShark",
-  "favicon16": "LoanShark-16x16.png",
-  "favicon32": "LoanShark-32x32.png",
+  "favicon16": "./img/icons/LoanShark-16x16",
+  "favicon32": "./img/icons/LoanShark-32x32",
   "icons": [
     {
       "src": "./img/icons/LoanShark-logo.png",

@@ -138,7 +138,7 @@ export default new Vuex.Store({
         })
     },
 
-    thisIsANewName({ commit, dispatch }, payload) {
+    updateRating({ commit, dispatch }, payload) {
       api.put('users/' + payload._id, payload)
         .then(res => {
           console.log(res.data)

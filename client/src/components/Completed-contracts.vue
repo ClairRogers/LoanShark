@@ -20,7 +20,7 @@
               <h6>Item: {{ag.item}}</h6>
               <p class="card-text">{{ag.description}}</p>
             </div>
-            <div class="d-flex flex-column justify-content-center">
+            <div v-if="user._id == ag.borrower._id" class=" d-flex flex-column justify-content-center">
               <button class="btn btn-danger" @click.stop="rateLender(ag)" data-dismiss="modal">Rate Lender</button>
             </div>
           </div>
@@ -57,17 +57,17 @@
         const inputOptions = new Promise((resolve) => {
           setTimeout(() => {
             resolve({
-              '1': 'Terrible',
-              '2': 'Okay',
-              '3': 'Good',
-              '4': 'Great',
-              '5': 'Excellent',
+              '1': '1',
+              '2': '2',
+              '3': '3',
+              '4': '4',
+              '5': '5',
             })
           }, 1000)
         })
         const { value: rating } = await Swal.fire({
           title: 'Rate User',
-          text: 'Please rate your overall experience with this user:',
+          text: 'Please rate your overall experience with this user (1 being terrible and 5 being excellent):',
           input: 'radio',
           showCancelButton: true,
           inputOptions: inputOptions,
@@ -76,13 +76,12 @@
               return 'You need to choose something!'
 
             } else {
-              this.$store.dispatch('thisIsANewName', { score: value, _id: ag.lender._id })
+              this.$store.dispatch('updateRating', { score: value, _id: ag.lender._id })
               Swal.fire({ text: 'Thanks for rating!' })
             }
           }
         })
       }
-
     },
     components: {
       viewmodal,

@@ -27,13 +27,14 @@
             <button v-else class="btn btn-info mb-3" @click="showCurrent = !showCurrent">View Completed
               Contracts</button>
             <h4 v-if="!showCurrent" class="text-center d-flex justify-content-around"><span class="pointer font"
-                :class="showContracts ? 'selected' : ''" @click="showContracts = !showContracts">My Lends</span> <span
-                class="pointer font" :class="!showContracts ? 'selected' : ''"
-                @click="showContracts = !showContracts">My
+                :class="showContracts ? 'selected' : ''" @click="showContracts = true">My Lends</span> <span
+                class="pointer font" :class="!showContracts ? 'selected' : ''" @click="showContracts = false">My
                 Borrows</span></h4>
             <div v-if="!showCurrent">
-              <lends v-if="showContracts" :user="user"></lends>
-              <borrows v-if="!showContracts" :user="user"></borrows>
+              <transition :name="showContracts ? 'first-slide' : 'second-slide'" mode="out-in">
+                <lends v-if="showContracts" :user="user"></lends>
+                <borrows v-if="!showContracts" :user="user"></borrows>
+              </transition>
             </div>
             <completed v-else :user="user"></completed>
 
@@ -162,6 +163,62 @@
   .selected {
     border-bottom: solid 5px #13abc4;
   }
+
+
+
+
+  .first-slide-enter {
+    opacity: 0;
+    transform: translatex(-50px);
+    transition: all .5s ease-out;
+  }
+
+  .first-slide-enter-to {
+    opacity: 1;
+    transform: translatex(0);
+    transition: all .5s ease-out;
+  }
+
+  .first-slide-leave-to {
+    opacity: 0;
+    transform: translatex(50px);
+    transition: all .5s ease-out;
+  }
+
+
+  .second-slide-enter {
+    opacity: 0;
+    transform: translatex(50px);
+    transition: all .5s ease-out;
+  }
+
+  .second-slide-enter-to {
+    opacity: 1;
+    transform: translatex(0);
+    transition: all .5s ease-out;
+  }
+
+  .second-slide-leave-to {
+    opacity: 0;
+    transform: translatex(-50px);
+    transition: all .5s ease-out;
+  }
+
+
+  /* 
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  } */
 
 
 

@@ -2,49 +2,53 @@
   <div class="messages container-fluid">
     <div class="row">
       <div class="col-12 col-md-8 offset-md-2">
-        <h3 class="my-3 d-flex justify-content-around"><span class="font pointer" :class="showMessages ? 'selected' : ''"
-            @click="showMessages = !showMessages">Pending
-            Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''" @click="showMessages = !showMessages">Pending
+        <h3 class="my-3 d-flex justify-content-around"><span class="font pointer"
+            :class="showMessages ? 'selected' : ''" @click="showMessages = true">Pending
+            Lends</span> <span class="font pointer" :class="!showMessages ? 'selected' : ''"
+            @click="showMessages = false">Pending
             Borrows</span></h3>
 
-        <div v-if="showMessages" v-for="message in lendMessages" class="card text-center my-2">
-          <div class="card-header">
-            <h3>{{message.borrower.name}}</h3>
+        <transition :name="showMessages ? 'first-slide' : 'second-slide'" mode="out-in">
+          <div v-if="showMessages" v-for="message in lendMessages" class="card text-center my-2">
+            <div class="card-header">
+              <h3>{{message.borrower.name}}</h3>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Item: {{message.item}}</h5>
+              <p class="card-text">{{message.description}}</p>
+              <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)"
+                data-toggle="modal" data-target="#contractModal">View
+                Contract</button>
+              <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
+              <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
+              <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-around">
+              <p>Lent To: {{message.borrower.name}}</p>
+              <p>From: {{message.lender.name}}</p>
+            </div>
           </div>
-          <div class="card-body">
-            <h5 class="card-title">Item: {{message.item}}</h5>
-            <p class="card-text">{{message.description}}</p>
-            <button type="button" class="btn btn-sm btn-info mr-1" @click="setActiveMessage(message)" data-toggle="modal"
-              data-target="#contractModal">View
-              Contract</button>
-            <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
-            <h5 class="mt-3" v-if="message.sent == true">Awaiting Reply...</h5>
-            <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
-          </div>
-          <div class="card-footer text-muted d-flex justify-content-around">
-            <p>Lent To: {{message.borrower.name}}</p>
-            <p>From: {{message.lender.name}}</p>
-          </div>
-        </div>
 
-        <div v-if="!showMessages" v-for="message in borrowMessages" class="card text-center my-2">
-          <div class="card-header">
-            <h3>{{message.title}}</h3>
+          <div v-if="!showMessages" v-for="message in borrowMessages" class="card text-center my-2">
+            <div class="card-header">
+              <h3>{{message.title}}</h3>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">For: {{message.item}}</h5>
+              <p class="card-text">{{message.description}}</p>
+              <button @click="setActiveMessage(message)" class="btn btn-sm btn-info mr-1" data-toggle="modal"
+                data-target="#contractModal">View
+                Contract</button>
+              <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
+              <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply...</h5>
+              <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-around">
+              <p>To: {{message.borrower.name}}</p>
+              <p>From: {{message.lender.name}}</p>
+            </div>
           </div>
-          <div class="card-body">
-            <h5 class="card-title">For: {{message.item}}</h5>
-            <p class="card-text">{{message.description}}</p>
-            <button @click="setActiveMessage(message)" class="btn btn-sm btn-info mr-1" data-toggle="modal" data-target="#contractModal">View
-              Contract</button>
-            <button class="btn btn-sm btn-danger" @click="deleteAg(message)">Delete</button>
-            <h5 class="mt-3" v-if="message.sent == false">Awaiting Reply...</h5>
-            <h5 class="mt-3" style="color: #2fcf2f" v-else>Your Turn to Reply!</h5>
-          </div>
-          <div class="card-footer text-muted d-flex justify-content-around">
-            <p>To: {{message.borrower.name}}</p>
-            <p>From: {{message.lender.name}}</p>
-          </div>
-        </div>
+        </transition>
       </div>
     </div>
 
@@ -117,5 +121,44 @@
 
   .pointer {
     cursor: pointer;
+  }
+
+
+
+  .first-slide-enter {
+    opacity: 0;
+    transform: translatex(-50px);
+    transition: all .5s ease-out;
+  }
+
+  .first-slide-enter-to {
+    opacity: 1;
+    transform: translatex(0);
+    transition: all .5s ease-out;
+  }
+
+  .first-slide-leave-to {
+    opacity: 0;
+    transform: translatex(50px);
+    transition: all .5s ease-out;
+  }
+
+
+  .second-slide-enter {
+    opacity: 0;
+    transform: translatex(50px);
+    transition: all .5s ease-out;
+  }
+
+  .second-slide-enter-to {
+    opacity: 1;
+    transform: translatex(0);
+    transition: all .5s ease-out;
+  }
+
+  .second-slide-leave-to {
+    opacity: 0;
+    transform: translatex(-50px);
+    transition: all .5s ease-out;
   }
 </style>

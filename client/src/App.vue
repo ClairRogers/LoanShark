@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bgc">
-      <a class="navbar-brand logo" href="#"><i class="">LoanShark</i><img src="./assets/LoanShark-white.png"
+      <a class="navbar-brand logo" @click="goHome"><i class="">LoanShark</i><img src="./assets/LoanShark-white.png"
           width="40px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,9 @@
             <a class="nav-link" @click="logOut" data-toggle="collapse" data-target="#navbarSupportedContent">Logout</a>
           </li>
         </ul>
-        <i class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"></i>
+        <h6 class="mx-4 mt-2" v-if="user.name">Welcome, {{user.name}}.</h6>
+        <i class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"
+          title="Search"></i>
       </div>
     </nav>
     <!-- Modal -->
@@ -81,7 +83,6 @@
       },
       //Searches as letters are input
       userSearch() {
-
         let search = debounce(query => {
           this.$store.dispatch('searchUser', this.searchTerm)
         }, 300);
@@ -123,6 +124,9 @@
       borrowMessages() {
         let user = this.$store.state.user
         return this.$store.state.messages.filter(m => m.borrower._id == user._id).filter(m => m.sent == true)
+      },
+      user() {
+        return this.$store.state.user
       }
     }
   }

@@ -8,7 +8,7 @@ module.exports = {
   css: undefined,
   pwa: {
     iconPaths: {
-      favicon32: 'client/public/img/icons/LoanShark-16x16.png',
+      favicon32: 'client/public/img/icons/LoanShark-32x32.png',
     }
   }
 }
