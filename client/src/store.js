@@ -189,6 +189,7 @@ export default new Vuex.Store({
         .then(res => {
           let blank = {}
           commit('setActiveAg', blank)
+          dispatch('getMessages')
         })
     },
 
