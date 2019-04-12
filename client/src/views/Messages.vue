@@ -8,6 +8,7 @@
             @click="showMessages = false">Pending
             Borrows</span></h3>
 
+        <!-- TRANSITIONS NOT WORKING YET -->
         <transition :name="showMessages ? 'first-slide' : 'second-slide'" mode="out-in">
           <div v-if="showMessages">
             <div v-for="message in lendMessages" class="card text-center my-2">
@@ -31,7 +32,7 @@
             </div>
           </div>
 
-          <div v-else>
+          <div v-if="!showMessages">
             <div v-for="message in borrowMessages" class="card text-center my-2">
               <div class="card-header">
                 <h3>{{message.title}}</h3>
@@ -53,6 +54,7 @@
             </div>
           </div>
         </transition>
+
       </div>
     </div>
 

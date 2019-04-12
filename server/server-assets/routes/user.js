@@ -197,7 +197,7 @@ router.put('/:id/remove', (req, res, next) => {
         if (fr._id.toString() == req.body.friendId) {
           user.friends.splice(i, 1)
           user.save()
-          delete user._doc.hash
+          // delete user._doc.hash
           res.send(user)
         }
       }
