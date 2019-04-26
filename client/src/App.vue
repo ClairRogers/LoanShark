@@ -14,20 +14,26 @@
             <a class="nav-link" @click="goHome" data-toggle="collapse" data-target="#navbarSupportedContent">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="goContacts" data-toggle="collapse" data-target="#navbarSupportedContent">My
+            <a v-if="user.name" class="nav-link" @click="goContacts" data-toggle="collapse"
+              data-target="#navbarSupportedContent">My
               Contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="goMessages" data-toggle="collapse"
+            <a v-if="user.name" class="nav-link" @click="goMessages" data-toggle="collapse"
               data-target="#navbarSupportedContent">Messages
               <span>{{unreadMessages()}}</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" @click="logOut" data-toggle="collapse" data-target="#navbarSupportedContent">Logout</a>
+            <a v-if="user.name" class="nav-link" @click="logOut" data-toggle="collapse"
+              data-target="#navbarSupportedContent">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a v-if="!user.name" class="nav-link" data-toggle="modal"
+              data-target="#loginModal">Login/Register</a>
           </li>
         </ul>
         <h6 class="mx-4 mt-2" v-if="user.name">Welcome, {{user.name}}.</h6>
-        <i class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"
+        <i v-if="user.name" class="fas fa-search" data-toggle="modal" data-target="#searchModal" @click="modalAutoFocus"
           title="Search"></i>
       </div>
     </nav>
@@ -54,12 +60,14 @@
         </div>
       </div>
     </div>
+    <loginmodal></loginmodal>
     <router-view />
   </div>
 </template>
 
 <script>
   const { debounce } = require('mini-debounce')
+  import loginmodal from '@/components/loginmodal.vue'
   import search from "@/components/Search-comp.vue";
   import router from './router'
   export default {
@@ -114,7 +122,8 @@
     },
     components: {
       search,
-      router
+      router,
+      loginmodal
     },
     computed: {
       lendMessages() {
